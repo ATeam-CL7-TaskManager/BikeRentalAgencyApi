@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BikeRentalAgencyApi.Models.Store">
+    <Position X="9" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAIAAAAEAAAAAAAAAABAAAAJAAQAAA=</HashCode>
+      <FileName>Models\Store.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BikeRentalAgencyApi.Models.Reservation">
+    <Position X="2.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQgAgAAAAAABAAAAIBAAAQAkAABAABAAAAAAAMACAAA=</HashCode>
+      <FileName>Models\Reservation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BikeRentalAgencyApi.Models.Employee">
+    <Position X="4.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAIEAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\Employee.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BikeRentalAgencyApi.Models.Customer">
+    <Position X="6.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAIAEAAAg=</HashCode>
+      <FileName>Models\Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BikeRentalAgencyApi.Models.Bike">
+    <Position X="1" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAEAAAACAAAQAAGAAAAABAAAABAAAAAAQAAAAA=</HashCode>
+      <FileName>Models\Bike.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

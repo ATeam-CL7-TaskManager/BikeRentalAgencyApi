@@ -1,7 +1,11 @@
+using BikeRentalAgencyApi.Models;
+using BikeRentalAgencyApi.Repository;
+using BikeRentalAgencyApi.Repository.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +36,16 @@ namespace BikeRentalAgencyApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BikeRentalAgencyApi", Version = "v1" });
             });
+
+            services.AddTransient<IBikeRepository, BikeRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IReservationRepository, ReservationRepository>();
+            services.AddTransient<IStoreRepository, StoreRepository>();
+
+
+            services.AddDbContext<BikeStoreContext>(options =>
+                options.UseSqlServer(Configuration["ConnectionStrings:BikeStoreContext"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

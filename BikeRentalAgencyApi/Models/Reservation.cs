@@ -10,7 +10,7 @@ namespace BikeRentalAgencyApi.Models
         public int ReservationId { get; set; }
         public int CustomerId { get; set; }
         public int BikeId { get; set; }
-                public int PaymentId { get; set; }
+        public int PaymentId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsComplete { get; set; }

@@ -7,8 +7,8 @@ namespace BikeRentalAgencyApi.Models
 {
     public class Bike
     {
-        public int Id { get; set; }
-        public int StoreID { get; set; }
+        public int BikeId { get; set; }
+        public int StoreId { get; set; }
         public decimal HourlyRate { get; set; }
         public decimal BikePrice { get; set; }
         public decimal FrameSize { get; set; }

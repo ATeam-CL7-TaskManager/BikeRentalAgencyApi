@@ -18,7 +18,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
         {
             if (db != null)
             {
-                await db.Customer.AddAsync(customer);
+                await db.Customers.AddAsync(customer);
                 await db.SaveChangesAsync();
                 return customer.CustomerId;
             }
@@ -29,7 +29,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
 
             if (db != null)
             {
-                return await (from p in db.Customer
+                return await (from p in db.Customers
                               where p.CustomerId == customerId
                               select new Customer
                               {
@@ -48,7 +48,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
 
             if (db != null)
             {
-                return await db.Customer.ToListAsync();
+                return await db.Customers.ToListAsync();
             }
             return null;
         }
@@ -60,11 +60,11 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 //Find the customer for specific customer id
-                var customer = await db.Customer.FirstOrDefaultAsync(x => x.CustomerId == customerId);
+                var customer = await db.Customers.FirstOrDefaultAsync(x => x.CustomerId == customerId);
                 if (customer != null)
                 {
                     //Delete that customer
-                    db.Customer.Remove(customer);
+                    db.Customers.Remove(customer);
                     //Commit the transaction
                     result = await db.SaveChangesAsync();
                 }
@@ -78,7 +78,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 //Delete that customer
-                db.Customer.Update(customer);
+                db.Customers.Update(customer);
                 //Commit the transaction
                 await db.SaveChangesAsync();
             }

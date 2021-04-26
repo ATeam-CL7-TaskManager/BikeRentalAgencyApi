@@ -9,6 +9,8 @@ using BikeRentalAgencyApi.Repository.Repositories;
 
 namespace BikeRentalAgencyApi.Controllers
 {
+    [Route ("Api/[Controller]")]
+    [ApiController]
     public class BikeController : Controller
     {
         public IBikeRepository _BikeRepository;

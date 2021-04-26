@@ -8,6 +8,8 @@ using BikeRentalAgencyApi.Repository;
 
 namespace BikeRentalAgencyApi.Controllers
 {
+    [Route("Api/[Controller]")]
+    [ApiController]
     public class StoreController : Controller
     {
         public IStoreRepository _StoreRepository;
@@ -24,7 +26,7 @@ namespace BikeRentalAgencyApi.Controllers
                 await _StoreRepository.AddStore(store) ;
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }

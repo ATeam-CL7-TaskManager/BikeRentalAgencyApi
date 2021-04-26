@@ -22,9 +22,9 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             //admin action only
             if (db != null)
             {
-                await db.Bike.AddAsync(bike);
+                await db.Bikes.AddAsync(bike);
                 await db.SaveChangesAsync();
-                return bike.BikeId;
+                return bike.BikeID;
             }
             return 0;
         }
@@ -36,11 +36,11 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 //Find the post for specific post id
-                var bike = await db.Bike.FirstOrDefaultAsync(x => x.BikeId == bikeId);
+                var bike = await db.Bikes.FirstOrDefaultAsync(x => x.BikeID == bikeId);
                 if (bike != null)
                 {
                     //Delete that post
-                    db.Bike.Remove(bike);
+                    db.Bikes.Remove(bike);
                     //Commit the transaction
                     result = await db.SaveChangesAsync();
                 }
@@ -53,7 +53,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
         {
             if (db != null)
             {
-                return await db.Bike.ToListAsync();
+                return await db.Bikes.ToListAsync();
             }
             return null;
         }
@@ -62,14 +62,14 @@ namespace BikeRentalAgencyApi.Repository.Repositories
         {
             if (db != null)
             {
-                return await (from p in db.Bike
-                              where p.BikeId == bikeId
+                return await (from p in db.Bikes
+                              where p.BikeID == bikeId
                               select new Bike
                               {
-                                  BikeId = p.BikeId,
-                                  StoreId = p.StoreId,
+                                  BikeID = p.BikeID,
+                                  StoreID = p.StoreID,
                                   HourlyRate = p.HourlyRate,
-                                  BikePrice = p.BikePrice,
+                                  Price = p.Price,
                                   FrameSize = p.FrameSize,
                                   IsRented = p.IsRented,
                                   Motorized = p.Motorized,
@@ -88,7 +88,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 //Delete that bike
-                db.Bike.Update(bike);
+                db.Bikes.Update(bike);
                 //Commit the transaction
                 await db.SaveChangesAsync();
             }

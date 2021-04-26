@@ -8,6 +8,8 @@ using BikeRentalAgencyApi.Repository;
 
 namespace BikeRentalAgencyApi.Controllers
 {
+    [Route("Api/[Controller]")]
+    [ApiController]
     public class ReservationController : Controller
     {
         public IReservationRepository _ReservationRepository;

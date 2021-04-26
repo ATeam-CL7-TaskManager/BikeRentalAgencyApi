@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace BikeRentalAgencyApi.Controllers
 {
+    [Route("Api/[Controller]")]
+    [ApiController]
     public class CustomerController : Controller
     {
         public ICustomerRepository _customerRepository;

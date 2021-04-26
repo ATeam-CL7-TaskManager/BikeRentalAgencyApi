@@ -17,11 +17,18 @@ namespace BikeRentalAgencyApi.Repository.Repositories
         public async Task<int> AddStore(Store store)
         {
             //administrative action only
-            if (db != null)
+            try
             {
-                await db.Store.AddAsync(store);
-                await db.SaveChangesAsync();
-                return store.StoreId;
+                if (db != null)
+                {
+                    await db.Stores.AddAsync(store);
+                    await db.SaveChangesAsync();
+                    return store.StoreID;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
             return 0;
         }
@@ -29,16 +36,16 @@ namespace BikeRentalAgencyApi.Repository.Repositories
         {
             if (db != null)
             {
-                return await (from p in db.Store
-                              where p.StoreId == storeId
+                return await (from p in db.Stores
+                              where p.StoreID == storeId
                               select new Store
                               {
-                                  StoreId = p.StoreId,
+                                  StoreID = p.StoreID,
                                   AddressLine1 = p.AddressLine1,
                                   AddressLine2 = p.AddressLine2,
                                   City = p.City,
                                   State = p.State,
-                                  ZipCode = p.ZipCode,
+                                  Zip = p.Zip,
                                   Phone = p.Phone,
                                   Email = p.Email,
                               }).FirstOrDefaultAsync();
@@ -50,7 +57,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
         {
             if (db != null)
             {
-                return await db.Store.ToListAsync();
+                return await db.Stores.ToListAsync();
             }
             return null;
         }
@@ -63,11 +70,11 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 //Find the store for specific store id
-                var store = await db.Store.FirstOrDefaultAsync(x => x.StoreId == storeId);
+                var store = await db.Stores.FirstOrDefaultAsync(x => x.StoreID == storeId);
                 if (store != null)
                 {
                     //Delete that store
-                    db.Store.Remove(store);
+                    db.Stores.Remove(store);
                     //Commit the transaction
                     result = await db.SaveChangesAsync();
                 }
@@ -83,7 +90,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 //Delete that store
-                db.Store.Update(store);
+                db.Stores.Update(store);
                 //Commit the transaction
                 await db.SaveChangesAsync();
             }

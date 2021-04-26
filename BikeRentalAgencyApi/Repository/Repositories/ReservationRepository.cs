@@ -18,7 +18,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
     {
         if (db != null)
         {
-            await db.Reservation.AddAsync(reservation);
+            await db.Reservations.AddAsync(reservation);
             await db.SaveChangesAsync();
             return reservation.ReservationId;
         }
@@ -28,7 +28,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
     {
         if (db != null)
         {
-            return await (from p in db.Reservation
+            return await (from p in db.Reservations
                           where p.ReservationId == reservationId
                           select new Reservation
                           {
@@ -58,7 +58,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
 
             if (db != null)
         {
-            return await db.Reservation.ToListAsync();
+            return await db.Reservations.ToListAsync();
         }
         return null;
     }
@@ -71,11 +71,11 @@ namespace BikeRentalAgencyApi.Repository.Repositories
         if (db != null)
         {
             //Find the reservation for specific reservation id
-            var reservation = await db.Reservation.FirstOrDefaultAsync(x => x.ReservationId == reservationId);
+            var reservation = await db.Reservations.FirstOrDefaultAsync(x => x.ReservationId == reservationId);
             if (reservation != null)
             {
                 //Delete that reservation
-                db.Reservation.Remove(reservation);
+                db.Reservations.Remove(reservation);
                 //Commit the transaction
                 result = await db.SaveChangesAsync();
             }
@@ -89,7 +89,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
         if (db != null)
         {
             //Delete that reservation
-            db.Reservation.Update(reservation);
+            db.Reservations.Update(reservation);
             //Commit the transaction
             await db.SaveChangesAsync();
         }

@@ -20,7 +20,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
 
             if (db != null)
             {
-                await db.Employee.AddAsync(employee);
+                await db.Employees.AddAsync(employee);
                 await db.SaveChangesAsync();
                 return employee.EmployeeId;
             }
@@ -32,7 +32,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
 
             if (db != null)
             {
-                return await (from p in db.Employee
+                return await (from p in db.Employees
                               where p.EmployeeId == employeeId
                               select new Employee
                               {
@@ -52,7 +52,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
 
             if (db != null)
             {
-                return await db.Employee.ToListAsync();
+                return await db.Employees.ToListAsync();
             }
             return null;
         }
@@ -64,11 +64,11 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 //Find the post for specific post id
-                var employee = await db.Employee.FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+                var employee = await db.Employees.FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
                 if (employee != null)
                 {
                     //Delete that post
-                    db.Employee.Remove(employee);
+                    db.Employees.Remove(employee);
                     //Commit the transaction
                     result = await db.SaveChangesAsync();
                 }
@@ -84,7 +84,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 //Delete that employee
-                db.Employee.Update(employee);
+                db.Employees.Update(employee);
                 //Commit the transaction
                 await db.SaveChangesAsync();
             }

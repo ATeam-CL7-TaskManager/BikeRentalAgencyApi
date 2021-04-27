@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeRentalAgencyApi", "BikeRentalAgencyApi\BikeRentalAgencyApi.csproj", "{5912ABAE-C14D-4386-AA51-F4277EC241A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRentalAgencyApi", "BikeRentalAgencyApi\BikeRentalAgencyApi.csproj", "{5912ABAE-C14D-4386-AA51-F4277EC241A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeRentalAgencyUI", "BikeRentalAgencyUI\BikeRentalAgencyUI.csproj", "{68902E95-6C9E-428D-8A10-53A1DF20BDF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5912ABAE-C14D-4386-AA51-F4277EC241A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5912ABAE-C14D-4386-AA51-F4277EC241A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5912ABAE-C14D-4386-AA51-F4277EC241A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68902E95-6C9E-428D-8A10-53A1DF20BDF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68902E95-6C9E-428D-8A10-53A1DF20BDF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68902E95-6C9E-428D-8A10-53A1DF20BDF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68902E95-6C9E-428D-8A10-53A1DF20BDF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

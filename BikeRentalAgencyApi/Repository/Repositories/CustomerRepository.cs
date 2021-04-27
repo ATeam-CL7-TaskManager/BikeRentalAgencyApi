@@ -20,7 +20,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             {
                 await db.Customers.AddAsync(customer);
                 await db.SaveChangesAsync();
-                return customer.CustomerId;
+                return customer.CustomerID;
             }
             return 0;
         }
@@ -30,10 +30,10 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 return await (from p in db.Customers
-                              where p.CustomerId == customerId
+                              where p.CustomerID == customerId
                               select new Customer
                               {
-                                  CustomerId = p.CustomerId,
+                                  CustomerID = p.CustomerID,
                                   FirstName = p.FirstName,
                                   LastName = p.LastName,
                                   Phone = p.Phone,
@@ -60,7 +60,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 //Find the customer for specific customer id
-                var customer = await db.Customers.FirstOrDefaultAsync(x => x.CustomerId == customerId);
+                var customer = await db.Customers.FirstOrDefaultAsync(x => x.CustomerID == customerId);
                 if (customer != null)
                 {
                     //Delete that customer

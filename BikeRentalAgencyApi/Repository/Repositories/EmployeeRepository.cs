@@ -22,7 +22,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             {
                 await db.Employees.AddAsync(employee);
                 await db.SaveChangesAsync();
-                return employee.EmployeeId;
+                return employee.EmployeeID;
             }
             return 0;
         }
@@ -33,13 +33,13 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 return await (from p in db.Employees
-                              where p.EmployeeId == employeeId
+                              where p.EmployeeID == employeeId
                               select new Employee
                               {
-                                  EmployeeId = p.EmployeeId,
+                                  EmployeeID = p.EmployeeID,
                                   FirstName = p.FirstName,
                                   LastName = p.LastName,
-                                  StoreId = p.StoreId,
+                                  StoreID = p.StoreID,
                                   Supervisor = p.Supervisor,
 
                               }).FirstOrDefaultAsync();
@@ -64,7 +64,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             if (db != null)
             {
                 //Find the post for specific post id
-                var employee = await db.Employees.FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+                var employee = await db.Employees.FirstOrDefaultAsync(x => x.EmployeeID == employeeId);
                 if (employee != null)
                 {
                     //Delete that post

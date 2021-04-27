@@ -20,7 +20,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
         {
             await db.Reservations.AddAsync(reservation);
             await db.SaveChangesAsync();
-            return reservation.ReservationId;
+            return reservation.ReservationID;
         }
         return 0;
     }
@@ -29,24 +29,20 @@ namespace BikeRentalAgencyApi.Repository.Repositories
         if (db != null)
         {
             return await (from p in db.Reservations
-                          where p.ReservationId == reservationId
+                          where p.ReservationID == reservationId
                           select new Reservation
                           {
-                              ReservationId = p.ReservationId,
-                              CustomerId = p.CustomerId,
-                              BikeId = p.BikeId,
-                              PaymentId = p.PaymentId,
+                              ReservationID = p.ReservationID,
+                              BikeID = p.BikeID,
                               StartDate = p.StartDate,
                               EndDate = p.EndDate,
                               IsComplete = p.IsComplete,
-                              EmployeeId = p.EmployeeId,
-                              HomeStoreId = p.HomeStoreId,
-                              RentedStoreId = p.RentedStoreId,
+                              HomeStoreID = p.HomeStoreID,
+                              RentedStoreID = p.RentedStoreID,
                               ReservationTotal = p.ReservationTotal,
                               AccessoriesTotal = p.AccessoriesTotal,
-                              OrderTotal = p.OrderTotal,
-                              OrderDetails = p.OrderDetails,
                               IsStarted = p.IsStarted,
+                              OrderID = p.OrderID
                           }).FirstOrDefaultAsync();
         }
         return null;
@@ -71,7 +67,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
         if (db != null)
         {
             //Find the reservation for specific reservation id
-            var reservation = await db.Reservations.FirstOrDefaultAsync(x => x.ReservationId == reservationId);
+            var reservation = await db.Reservations.FirstOrDefaultAsync(x => x.ReservationID == reservationId);
             if (reservation != null)
             {
                 //Delete that reservation

@@ -21,5 +21,6 @@ namespace BikeRentalAgencyApi.Models
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
     }
 }

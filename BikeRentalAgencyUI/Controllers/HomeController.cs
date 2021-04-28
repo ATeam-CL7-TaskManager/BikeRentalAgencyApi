@@ -22,23 +22,24 @@ namespace BikeRentalAgencyUI.Controllers
 
         public async Task<ActionResult> Index()
         {
-            Bike ResInfo = new();
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(Baseurl);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync("bike/getallbikes?");
-                if (Res.IsSuccessStatusCode)
-                {
-                    //Storing the response details recieved from web api   
-                    var ResResponse = Res.Content.ReadAsStringAsync().Result;
+            return View();
+            //Bike ResInfo = new();
+            //using (var client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri(Baseurl);
+            //    client.DefaultRequestHeaders.Clear();
+            //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            //    HttpResponseMessage Res = await client.GetAsync("bike/getallbikes?");
+            //    if (Res.IsSuccessStatusCode)
+            //    {
+            //        //Storing the response details recieved from web api   
+            //        var ResResponse = Res.Content.ReadAsStringAsync().Result;
 
-                    //Deserializing the response recieved from web api and storing into the Employee list  
-                    ResInfo = JsonConvert.DeserializeObject<Bike>(ResResponse);
-                }
-                return View(ResInfo);
-            }
+            //        //Deserializing the response recieved from web api and storing into the Employee list  
+            //        ResInfo = JsonConvert.DeserializeObject<Bike>(ResResponse);
+            //    }
+            //    return View(ResInfo);
+            
         }
         IActionResult Privacy()
             {

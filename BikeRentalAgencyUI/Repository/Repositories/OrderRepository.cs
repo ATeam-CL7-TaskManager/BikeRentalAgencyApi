@@ -7,40 +7,123 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace BikeRentalAgencyUI.Repository.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        BikeStoreContext db;
-        public OrderRepository(BikeStoreContext _db)
+        string baseUrl = "http://localhost:5000/api/";
+        public async Task<bool> AddOrder(Order order)
         {
-            db = _db;
+            using (var client = new HttpClient())
+            {
+                //Passing service base url  
+                client.BaseAddress = new Uri(baseUrl);
+
+                //Sending request to find web api REST service resource AddPost using HttpClient  
+                HttpResponseMessage res = await client.PostAsJsonAsync(
+                    "order/Addorder", order);
+
+                //Checking the response is successful or not which is sent using HttpClient  
+                return res.IsSuccessStatusCode;
+            }
         }
 
-        public Task<bool> AddOrder(Order order)
+        public async Task<bool> DeleteOrder(int? orderId)
         {
-            throw new NotImplementedException();
+            bool succeeded = false;
+            using (var client = new HttpClient())
+            {
+                //Passing service base url  
+                client.BaseAddress = new Uri(baseUrl);
+                //Sending request to find web api REST service resource UpdatePost using HttpClient  
+                HttpResponseMessage res = await client.DeleteAsync(
+                    $"order/Deleteorder?orderId={orderId}");
+                succeeded = res.IsSuccessStatusCode;
+            }
+            return succeeded;
         }
 
-        public Task<bool> DeleteOrder(int? orderID)
+        public async Task<List<Order>> GetOrders()
         {
-            throw new NotImplementedException();
+            List<Order> posts = new List<Order>();
+            using (var client = new HttpClient())
+            {
+                //Passing service base url  
+                client.BaseAddress = new Uri(baseUrl);
+
+                client.DefaultRequestHeaders.Clear();
+                //Define request data format  
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //Sending request to find web api REST service resource GetPosts using HttpClient  
+                HttpResponseMessage res = await client.GetAsync("Order/GetAllOrders");
+
+                //Checking the response is successful or not which is sent using HttpClient  
+                if (res.IsSuccessStatusCode)
+                {
+                    //Storing the response details received from web api   
+                    var response = res.Content.ReadAsStringAsync().Result;
+
+                    //Deserializing the response received from web api and storing into the Post list  
+                    posts = JsonConvert.DeserializeObject<List<Order>>(response);
+
+                }
+                //returning the post list to view 
+                return posts;
+            }
         }
 
-        public Task<Order> GetOrder(int? orderID)
+
+        public async Task<bool> UpdateOrder(Order order)
         {
-            throw new NotImplementedException();
+            using (var client = new HttpClient())
+            {
+                //Passing service base url  
+                client.BaseAddress = new Uri(baseUrl);
+
+                //Sending request to find web api REST service resource UpdatePost using HttpClient  
+                HttpResponseMessage res = await client.PutAsJsonAsync(
+                    "order/Updateorder", order);
+
+                //Checking the response is successful or not which is sent using HttpClient  
+                return res.IsSuccessStatusCode;
+
+            }
         }
 
-        public Task<List<Order>> GetOrders()
+
+        public async Task<Order> GetOrder(int? orderId)
         {
-            throw new NotImplementedException();
+            Order order = new();
+            using (var client = new HttpClient())
+            {
+                //Passing service base url  
+                client.BaseAddress = new Uri(baseUrl);
+
+                client.DefaultRequestHeaders.Clear();
+                //Define request data format  
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //Sending request to find web api REST service resource GetPost using HttpClient  
+                HttpResponseMessage res = await client.GetAsync($"Post/GetPost?postId={orderId}");
+
+                //Checking the response is successful or not which is sent using HttpClient  
+                if (res.IsSuccessStatusCode)
+                {
+                    //Storing the response details received from web api   
+                    var response = res.Content.ReadAsStringAsync().Result;
+
+                    //Deserializing the response received from web api and storing into the Post object 
+                    order = JsonConvert.DeserializeObject<Order>(response);
+
+                }
+            }
+            //returning the post to view  
+            return order;
         }
 
-        public Task<bool> UpdateOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

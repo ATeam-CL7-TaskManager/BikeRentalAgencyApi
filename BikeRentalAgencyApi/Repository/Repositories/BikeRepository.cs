@@ -49,7 +49,7 @@ namespace BikeRentalAgencyApi.Repository.Repositories
             return result;
         }
 
-         async Task<List<Bike>> IBikeRepository.GetBikes()
+         async Task<List<Bike>> IBikeRepository.GetAllBikes()
         {
             if (db != null)
             {

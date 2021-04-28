@@ -13,7 +13,7 @@ namespace BikeRentalAgencyUI.Controllers
 {
     public class HomeController : Controller
     {
-        string Baseurl = "https://localhost/44391";
+        string Baseurl = "http://localhost:5000/api/";
         private readonly ILogger<HomeController> _logger;
         public HomeController(ILogger<HomeController> logger)
         {
@@ -22,25 +22,25 @@ namespace BikeRentalAgencyUI.Controllers
 
         public async Task<ActionResult> Index()
         {
-            List<Reservation> ResInfo = new List<Reservation>();
+            Bike ResInfo = new();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync("api/Reservation/GetAllReservations");
+                HttpResponseMessage Res = await client.GetAsync("bike/getallbikes?");
                 if (Res.IsSuccessStatusCode)
                 {
                     //Storing the response details recieved from web api   
                     var ResResponse = Res.Content.ReadAsStringAsync().Result;
 
                     //Deserializing the response recieved from web api and storing into the Employee list  
-                    ResInfo = JsonConvert.DeserializeObject<List<Reservation>>(ResResponse);
+                    ResInfo = JsonConvert.DeserializeObject<Bike>(ResResponse);
                 }
                 return View(ResInfo);
             }
-
-            IActionResult Privacy()
+        }
+        IActionResult Privacy()
             {
                 return View();
             }
@@ -50,6 +50,6 @@ namespace BikeRentalAgencyUI.Controllers
             {
                 return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
             }
-        }
+        
     }
 }

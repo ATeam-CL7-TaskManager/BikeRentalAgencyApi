@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BikeRentalAgencyApi.Models;
+using BikeRentalAgencyUI.Models;
 
-namespace BikeRentalAgencyApi.Repository
+namespace BikeRentalAgencyUI.Repository.Interfaces
 {
     public interface IBikeRepository
     {
@@ -11,8 +11,8 @@ namespace BikeRentalAgencyApi.Repository
         Task<Bike> GetBike(int? bikeId);
 
         //admin actions only
-        Task<int> AddBike(Bike bike);
-        Task<int> DeleteBike(int? bikeId);
-        Task UpdateBike(Bike bike);
+        Task<bool> AddBike(Bike bike);
+        Task<bool> DeleteBike(int? bikeId);
+        Task<bool> UpdateBike(Bike bike);
     }
 }

@@ -9,7 +9,7 @@ using BikeRentalAgencyApi.Repository.Repositories;
 
 namespace BikeRentalAgencyApi.Controllers
 {
-    [Route ("Api/[Controller]")]
+    [Route ("Api/Bike")]
     [ApiController]
     public class BikeController : Controller
     {
@@ -31,8 +31,10 @@ namespace BikeRentalAgencyApi.Controllers
             {
                 return false;
             }
+
         }
-        [HttpGet("GetBike/{bikeId}")]
+        [HttpGet]
+        [Route ("GetBike/{bikeId}")]
         public async Task<Object> GetBike(int bikeId)
         {
             try
@@ -58,17 +60,18 @@ namespace BikeRentalAgencyApi.Controllers
                 return false;
             }
         }
-        [HttpPost("GetAllBikes")]
-        public async Task<Object> GetAllBikes()
+        [HttpGet]
+        [Route("GetAllBikes")]
+        public async Task<List<Bike>> GetAllBikes()
         {
             try
             {
-                await _BikeRepository.GetBikes();
-                return true;
+                List<Bike> bikes = await _BikeRepository.GetAllBikes();
+                return bikes;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
             }
         }
     }

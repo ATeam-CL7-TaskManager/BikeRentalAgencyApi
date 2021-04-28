@@ -60,7 +60,7 @@ namespace BikeRentalAgencyApi.Controllers
         }
 
         [HttpGet("GetAllReservations")]
-        public async Task<Object> GetReservations()
+        public async Task<Object> GetAllReservations()
         {
             try
             {

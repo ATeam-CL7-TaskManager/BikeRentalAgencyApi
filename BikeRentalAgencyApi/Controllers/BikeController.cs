@@ -32,13 +32,13 @@ namespace BikeRentalAgencyApi.Controllers
                 return false;
             }
         }
-        [HttpPost("GetBike/{id}")]
-        public async Task<Object> GetBike([FromBody] int? bikeId)
+        [HttpGet("GetBike/{bikeId}")]
+        public async Task<Object> GetBike(int bikeId)
         {
             try
             {
-                await _BikeRepository.GetBike(bikeId);
-                return true;
+                Bike bike = await _BikeRepository.GetBike(bikeId);
+                return bike;
             }
             catch (Exception)
             {

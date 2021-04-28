@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 
-namespace CustomerRentalAgencyUI.Repository.Repositories
+namespace BikeRentalAgencyUI.Repository.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {

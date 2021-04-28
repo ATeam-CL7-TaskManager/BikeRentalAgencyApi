@@ -14,9 +14,9 @@ namespace BikeRentalAgencyApi.Controllers
     public class BikeController : Controller
     {
         public IBikeRepository _BikeRepository;
-        public BikeController(IBikeRepository bikerepoistory)
+        public BikeController(IBikeRepository bikerepository)
         {
-            _BikeRepository = bikerepoistory;
+            _BikeRepository = bikerepository;
         }
 
         [HttpPost("AddBike")]

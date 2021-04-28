@@ -47,7 +47,7 @@ namespace BikeRentalAgencyUI.Repository.Repositories
             return succeeded;
         }
 
-        public async Task<List<Bike>> GetAllBikes()
+        public async Task<List<Bike>> GetBikes()
         {
             List<Bike> posts = new List<Bike>();
             using (var client = new HttpClient())
@@ -60,7 +60,7 @@ namespace BikeRentalAgencyUI.Repository.Repositories
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 //Sending request to find web api REST service resource GetPosts using HttpClient  
-                HttpResponseMessage res = await client.GetAsync("Bike/GetAllBikes");
+                HttpResponseMessage res = await client.GetAsync("Bike/GetBikes");
 
                 //Checking the response is successful or not which is sent using HttpClient  
                 if (res.IsSuccessStatusCode)

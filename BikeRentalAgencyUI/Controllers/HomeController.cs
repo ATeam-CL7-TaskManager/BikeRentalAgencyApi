@@ -29,7 +29,7 @@ namespace BikeRentalAgencyUI.Controllers
             //    client.BaseAddress = new Uri(Baseurl);
             //    client.DefaultRequestHeaders.Clear();
             //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage Res = await client.GetAsync("bike/getallbikes?");
+            //    HttpResponseMessage Res = await client.GetAsync("bike/getbikes?");
             //    if (Res.IsSuccessStatusCode)
             //    {
             //        //Storing the response details recieved from web api   

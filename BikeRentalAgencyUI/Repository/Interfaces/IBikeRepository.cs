@@ -7,7 +7,7 @@ namespace BikeRentalAgencyUI.Repository.Interfaces
 {
     public interface IBikeRepository
     {
-        Task<List<Bike>> GetAllBikes();
+        Task<List<Bike>> GetBikes();
         Task<Bike> GetBike(int? bikeId);
 
         //admin actions only

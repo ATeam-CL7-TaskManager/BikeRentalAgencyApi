@@ -61,12 +61,12 @@ namespace BikeRentalAgencyApi.Controllers
             }
         }
         [HttpGet]
-        [Route("GetAllBikes")]
-        public async Task<List<Bike>> GetAllBikes()
+        [Route("GetBikes")]
+        public async Task<List<Bike>> GetBikes()
         {
             try
             {
-                List<Bike> bikes = await _BikeRepository.GetAllBikes();
+                List<Bike> bikes = await _BikeRepository.GetBikes();
                 return bikes;
             }
             catch (Exception ex)

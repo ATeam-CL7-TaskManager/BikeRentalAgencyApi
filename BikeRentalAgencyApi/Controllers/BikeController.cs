@@ -9,70 +9,132 @@ using BikeRentalAgencyApi.Repository.Repositories;
 
 namespace BikeRentalAgencyApi.Controllers
 {
-    [Route ("Api/Bike")]
+    [Route("Api/Bike")]
     [ApiController]
     public class BikeController : Controller
     {
-        public IBikeRepository _BikeRepository;
+        private readonly IBikeRepository _BikeRepository;
         public BikeController(IBikeRepository bikerepository)
         {
             _BikeRepository = bikerepository;
         }
 
-        [HttpPost("AddBike")]
-        public async Task<Object> AddBike([FromBody]Bike bike)
+        [HttpPost]
+        [Route("AddBike")]
+        public async Task<IActionResult> AddBike([FromBody] Bike bike)
         {
-            try
+            if (ModelState.IsValid)
             {
-                await _BikeRepository.AddBike(bike);
-                return true;
+                try
+                {
+                    var bikeId = await _BikeRepository.AddBike(bike);
+                    if (bikeId > 0)
+                    {
+                        return Ok(bikeId);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
+        }
+        [HttpGet]
+        [Route("GetBike/{bikeId}")]
+        public async Task<IActionResult> GetBike(int? bikeId)
+        {
+            if (bikeId == null) { return BadRequest(); }
+            try 
+            { 
+                var bike = await _BikeRepository.GetBike(bikeId); 
+                if(bike == null)
+                {
+                    return NotFound();
+                }
+                return Ok(bike);
             }
             catch(Exception)
             {
-                return false;
+                return BadRequest();
             }
-
         }
-        [HttpGet]
-        [Route ("GetBike/{bikeId}")]
-        public async Task<Object> GetBike(int bikeId)
+        [HttpPost]
+        [Route("DeleteBike/{id}")]
+        public async Task<IActionResult> DeleteBike(int? bikeId)
         {
+            int result = 0;
+            if (bikeId == null)
+            {
+                return BadRequest();
+            }
             try
             {
-                Bike bike = await _BikeRepository.GetBike(bikeId);
-                return bike;
+                result = await _BikeRepository.DeleteBike(bikeId);
+                if (result == 0)
+                {
+                    return NotFound();
+                }
+                return Ok();
             }
             catch (Exception)
             {
-                return false;
-            }
-        }
-        [HttpPost("DeleteBike/{id}")]
-        public async Task<Object> DeleteBike([FromBody] int? bikeId)
-        {
-            try
-            {
-                await _BikeRepository.DeleteBike(bikeId);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
+                return BadRequest();
             }
         }
         [HttpGet]
         [Route("GetBikes")]
-        public async Task<List<Bike>> GetBikes()
+        public async Task<IActionResult> GetBikes()
         {
             try
             {
-                List<Bike> bikes = await _BikeRepository.GetBikes();
-                return bikes;
+                var bikes = await _BikeRepository.GetBikes();
+                if (bikes == null)
+                {
+                    return NotFound();
+                }
+                return Ok(bikes);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return BadRequest();
             }
+            //try
+            //{
+            //    List<Bike> bikes = await _BikeRepository.GetBikes();
+            //    return bikes;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+        }
+        [HttpPost]
+        [Route("UpdateBike")]
+        public async Task<IActionResult> UpdateBike([FromBody] Bike model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _BikeRepository.UpdateBike(model);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetType().FullName ==
+                        "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException")
+                    {
+                        return NotFound();
+                    }
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
         }
     }
 }

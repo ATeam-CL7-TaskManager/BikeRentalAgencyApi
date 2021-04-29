@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BikeRentalAgencyApi.Models;
 
-namespace BikeRentalAgencyApi.Repository
+namespace BikeRentalAgencyApi.Repository.Interfaces
 {
     public interface IReservationRepository
     {

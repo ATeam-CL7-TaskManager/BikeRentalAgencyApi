@@ -5,11 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using BikeRentalAgencyApi.Repository;
 using BikeRentalAgencyApi.Models;
-using BikeRentalAgencyApi.Repository.Repositories;
+using BikeRentalAgencyApi.Repository.Interfaces;
 
 namespace BikeRentalAgencyApi.Controllers
 {
-    [Route("Api/Bike")]
+    [Route("Api/Store")]
     [ApiController]
     public class StoreController : Controller
     {
@@ -45,7 +45,7 @@ namespace BikeRentalAgencyApi.Controllers
             return BadRequest();
         }
         [HttpGet]
-        [Route("GetStore/{bikeId}")]
+        [Route("GetStore/{storeId}")]
         public async Task<IActionResult> GetStore(int? storeId)
         {
             if (storeId == null) { return BadRequest(); }

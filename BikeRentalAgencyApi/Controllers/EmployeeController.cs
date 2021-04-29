@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BikeRentalAgencyApi.Repository;
 using BikeRentalAgencyApi.Models;
-using BikeRentalAgencyApi.Repository.Repositories;
+using BikeRentalAgencyApi.Repository.Interfaces;
 
 namespace EmployeeRentalAgencyApi.Controllers
 {

@@ -7,30 +7,30 @@ using BikeRentalAgencyApi.Repository;
 using BikeRentalAgencyApi.Models;
 using BikeRentalAgencyApi.Repository.Interfaces;
 
-namespace ReservationRentalAgencyApi.Controllers
+namespace OrderRentalAgencyApi.Controllers
 {
-    [Route("Api/Reservation")]
+    [Route("Api/Order")]
     [ApiController]
-    public class ReservationController : Controller
+    public class OrderController : Controller
     {
-        private readonly IReservationRepository _ReservationRepository;
-        public ReservationController(IReservationRepository reservationrepository)
+        private readonly IOrderRepository _OrderRepository;
+        public OrderController(IOrderRepository orderrepository)
         {
-            _ReservationRepository = reservationrepository;
+            _OrderRepository = orderrepository;
         }
 
         [HttpPost]
-        [Route("AddReservation")]
-        public async Task<IActionResult> AddReservation([FromBody] Reservation Reservation)
+        [Route("AddOrder")]
+        public async Task<IActionResult> AddOrder([FromBody] Order Order)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var ReservationId = await _ReservationRepository.AddReservation(Reservation);
-                    if (ReservationId > 0)
+                    var OrderId = await _OrderRepository.AddOrder(Order);
+                    if (OrderId > 0)
                     {
-                        return Ok(ReservationId);
+                        return Ok(OrderId);
                     }
                     else
                     {
@@ -45,18 +45,18 @@ namespace ReservationRentalAgencyApi.Controllers
             return BadRequest();
         }
         [HttpGet]
-        [Route("GetReservation/{ReservationId}")]
-        public async Task<IActionResult> GetReservation(int? ReservationId)
+        [Route("GetOrder/{OrderId}")]
+        public async Task<IActionResult> GetOrder(int? OrderId)
         {
-            if (ReservationId == null) { return BadRequest(); }
+            if (OrderId == null) { return BadRequest(); }
             try
             {
-                var Reservation = await _ReservationRepository.GetReservation(ReservationId);
-                if (Reservation == null)
+                var Order = await _OrderRepository.GetOrder(OrderId);
+                if (Order == null)
                 {
                     return NotFound();
                 }
-                return Ok(Reservation);
+                return Ok(Order);
             }
             catch (Exception)
             {
@@ -64,17 +64,17 @@ namespace ReservationRentalAgencyApi.Controllers
             }
         }
         [HttpPost]
-        [Route("DeleteReservation/{id}")]
-        public async Task<IActionResult> DeleteReservation(int? ReservationId)
+        [Route("DeleteOrder/{id}")]
+        public async Task<IActionResult> DeleteOrder(int? OrderId)
         {
             int result = 0;
-            if (ReservationId == null)
+            if (OrderId == null)
             {
                 return BadRequest();
             }
             try
             {
-                result = await _ReservationRepository.DeleteReservation(ReservationId);
+                result = await _OrderRepository.DeleteOrder(OrderId);
                 if (result == 0)
                 {
                     return NotFound();
@@ -87,17 +87,17 @@ namespace ReservationRentalAgencyApi.Controllers
             }
         }
         [HttpGet]
-        [Route("GetReservations")]
-        public async Task<IActionResult> GetReservations()
+        [Route("GetOrders")]
+        public async Task<IActionResult> GetOrders()
         {
             try
             {
-                var Reservations = await _ReservationRepository.GetReservations();
-                if (Reservations == null)
+                var Orders = await _OrderRepository.GetOrders();
+                if (Orders == null)
                 {
                     return NotFound();
                 }
-                return Ok(Reservations);
+                return Ok(Orders);
             }
             catch (Exception)
             {
@@ -105,8 +105,8 @@ namespace ReservationRentalAgencyApi.Controllers
             }
             //try
             //{
-            //    List<Reservation> Reservations = await _ReservationRepository.GetReservations();
-            //    return Reservations;
+            //    List<Order> Orders = await _OrderRepository.GetOrders();
+            //    return Orders;
             //}
             //catch (Exception ex)
             //{
@@ -114,14 +114,14 @@ namespace ReservationRentalAgencyApi.Controllers
             //}
         }
         [HttpPost]
-        [Route("UpdateReservation")]
-        public async Task<IActionResult> UpdateReservation([FromBody] Reservation model)
+        [Route("UpdateOrder")]
+        public async Task<IActionResult> UpdateOrder([FromBody] Order model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _ReservationRepository.UpdateReservation(model);
+                    await _OrderRepository.UpdateOrder(model);
                     return Ok();
                 }
                 catch (Exception ex)

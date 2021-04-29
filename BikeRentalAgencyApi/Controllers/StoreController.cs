@@ -3,88 +3,138 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BikeRentalAgencyApi.Models;
 using BikeRentalAgencyApi.Repository;
+using BikeRentalAgencyApi.Models;
+using BikeRentalAgencyApi.Repository.Repositories;
 
 namespace BikeRentalAgencyApi.Controllers
 {
-    [Route("Api/[Controller]")]
+    [Route("Api/Bike")]
     [ApiController]
     public class StoreController : Controller
     {
-        public IStoreRepository _StoreRepository;
+        private readonly IStoreRepository _StoreRepository;
         public StoreController(IStoreRepository storerepository)
         {
             _StoreRepository = storerepository;
         }
 
-        [HttpPost("AddStore")]
-        public async Task<Object> Getstore([FromBody] Store store)
+        [HttpPost]
+        [Route("AddStore")]
+        public async Task<IActionResult> AddStore([FromBody] Store store)
         {
-            try
+            if (ModelState.IsValid)
             {
-                await _StoreRepository.AddStore(store) ;
-                return true;
+                try
+                {
+                    var storeId = await _StoreRepository.AddStore(store);
+                    if (storeId > 0)
+                    {
+                        return Ok(storeId);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest();
+                }
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return BadRequest();
         }
-        [HttpPost("DeleteStore/{id}")]
-        public async Task<Object> DeleteStore([FromBody] int? storeId)
+        [HttpGet]
+        [Route("GetStore/{bikeId}")]
+        public async Task<IActionResult> GetStore(int? storeId)
         {
+            if (storeId == null) { return BadRequest(); }
             try
             {
-                await _StoreRepository.DeleteStore(storeId);
-                return true;
+                var store = await _StoreRepository.GetStore(storeId);
+                if (store == null)
+                {
+                    return NotFound();
+                }
+                return Ok(store);
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
         }
-
-        [HttpGet("GetStore/{id}")]
-        public async Task<Object> GetStore([FromBody] int? storeId)
+        [HttpPost]
+        [Route("DeleteStore/{id}")]
+        public async Task<IActionResult> DeleteStore(int? storeId)
         {
+            int result = 0;
+            if (storeId == null)
+            {
+                return BadRequest();
+            }
             try
             {
-                await _StoreRepository.GetStore(storeId);
-                return true;
+                result = await _StoreRepository.DeleteStore(storeId);
+                if (result == 0)
+                {
+                    return NotFound();
+                }
+                return Ok();
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
         }
-
-        [HttpGet("GetAllStores")]
-        public async Task<Object> GetStores()
+        [HttpGet]
+        [Route("GetStores")]
+        public async Task<IActionResult> GetStores()
         {
             try
             {
-                await _StoreRepository.GetStores();
-                return true;
+                var stores = await _StoreRepository.GetStores();
+                if (stores == null)
+                {
+                    return NotFound();
+                }
+                return Ok(stores);
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
+            //try
+            //{
+            //    List<Bike> bikes = await _BikeRepository.GetBikes();
+            //    return bikes;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
         }
-
-        [HttpPost("UpdateStore")]
-        public async Task<Object> UpdateStore([FromBody]Store store)
+        [HttpPost]
+        [Route("UpdateStore")]
+        public async Task<IActionResult> UpdateStore([FromBody] Store model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                await _StoreRepository.UpdateStore(store);
-                return true;
+                try
+                {
+                    await _StoreRepository.UpdateStore(model);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetType().FullName ==
+                        "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException")
+                    {
+                        return NotFound();
+                    }
+                    return BadRequest();
+                }
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            return BadRequest();
         }
     }
 }

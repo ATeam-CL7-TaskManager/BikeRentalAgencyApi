@@ -13,7 +13,7 @@ namespace BikeRentalAgencyApi.Controllers
     [ApiController]
     public class BikeController : Controller
     {
-        private readonly IBikeRepository _BikeRepository;
+        IBikeRepository _BikeRepository;
         public BikeController(IBikeRepository bikerepository)
         {
             _BikeRepository = bikerepository;
@@ -37,7 +37,7 @@ namespace BikeRentalAgencyApi.Controllers
                         return NotFound();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return BadRequest();
                 }

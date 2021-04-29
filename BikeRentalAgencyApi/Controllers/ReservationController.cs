@@ -3,88 +3,138 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BikeRentalAgencyApi.Models;
 using BikeRentalAgencyApi.Repository;
+using BikeRentalAgencyApi.Models;
+using BikeRentalAgencyApi.Repository.Repositories;
 
-namespace BikeRentalAgencyApi.Controllers
+namespace ReservationRentalAgencyApi.Controllers
 {
-    [Route("Api/[Controller]")]
+    [Route("Api/Reservation")]
     [ApiController]
     public class ReservationController : Controller
     {
-        public IReservationRepository _ReservationRepository;
+        private readonly IReservationRepository _ReservationRepository;
         public ReservationController(IReservationRepository reservationrepository)
         {
             _ReservationRepository = reservationrepository;
         }
 
-        [HttpPost("AddReservation")]
-        public async Task<Object> AddReservation([FromBody] Reservation reservation)
+        [HttpPost]
+        [Route("AddReservation")]
+        public async Task<IActionResult> AddReservation([FromBody] Reservation Reservation)
         {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var ReservationId = await _ReservationRepository.AddReservation(Reservation);
+                    if (ReservationId > 0)
+                    {
+                        return Ok(ReservationId);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                catch (Exception)
+                {
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
+        }
+        [HttpGet]
+        [Route("GetReservation/{ReservationId}")]
+        public async Task<IActionResult> GetReservation(int? ReservationId)
+        {
+            if (ReservationId == null) { return BadRequest(); }
             try
             {
-                await _ReservationRepository.AddReservation(reservation);
-                return true;
+                var Reservation = await _ReservationRepository.GetReservation(ReservationId);
+                if (Reservation == null)
+                {
+                    return NotFound();
+                }
+                return Ok(Reservation);
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
         }
-        [HttpPost("DeleteReservation/{id}")]
-        public async Task<Object> DeleteReservation([FromBody] int? reservationId)
+        [HttpPost]
+        [Route("DeleteReservation/{id}")]
+        public async Task<IActionResult> DeleteReservation(int? ReservationId)
         {
+            int result = 0;
+            if (ReservationId == null)
+            {
+                return BadRequest();
+            }
             try
             {
-                await _ReservationRepository.DeleteReservation(reservationId);
-                return true;
+                result = await _ReservationRepository.DeleteReservation(ReservationId);
+                if (result == 0)
+                {
+                    return NotFound();
+                }
+                return Ok();
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
         }
-
-        [HttpGet("GetReservation/{id}")]
-        public async Task<Object> GetReservation([FromBody] int? storeId)
+        [HttpGet]
+        [Route("GetReservations")]
+        public async Task<IActionResult> GetReservations()
         {
             try
             {
-                await _ReservationRepository.GetReservation(storeId);
-                return true;
+                var Reservations = await _ReservationRepository.GetReservations();
+                if (Reservations == null)
+                {
+                    return NotFound();
+                }
+                return Ok(Reservations);
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
+            //try
+            //{
+            //    List<Reservation> Reservations = await _ReservationRepository.GetReservations();
+            //    return Reservations;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
         }
-
-        [HttpGet("GetAllReservations")]
-        public async Task<Object> GetAllReservations()
+        [HttpPost]
+        [Route("UpdateReservation")]
+        public async Task<IActionResult> UpdateReservation([FromBody] Reservation model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                await _ReservationRepository.GetReservations();
-                return true;
+                try
+                {
+                    await _ReservationRepository.UpdateReservation(model);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetType().FullName ==
+                        "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException")
+                    {
+                        return NotFound();
+                    }
+                    return BadRequest();
+                }
             }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        [HttpPost("UpdateReservations/{id}")]
-        public async Task<Object> UpdateReservation([FromBody]Reservation reservation)
-        {
-            try
-            {
-                await _ReservationRepository.UpdateReservation(reservation);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return BadRequest();
         }
     }
 }

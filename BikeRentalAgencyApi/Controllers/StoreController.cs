@@ -37,7 +37,7 @@ namespace BikeRentalAgencyApi.Controllers
                         return NotFound();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return BadRequest();
                 }
@@ -67,7 +67,7 @@ namespace BikeRentalAgencyApi.Controllers
         [Route("DeleteStore/{id}")]
         public async Task<IActionResult> DeleteStore(int? storeId)
         {
-            int result = 0;
+            int result;
             if (storeId == null)
             {
                 return BadRequest();

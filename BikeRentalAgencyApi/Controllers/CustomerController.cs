@@ -1,93 +1,140 @@
-﻿using BikeRentalAgencyApi.Models;
-using BikeRentalAgencyApi.Repository;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BikeRentalAgencyApi.Repository;
+using BikeRentalAgencyApi.Models;
+using BikeRentalAgencyApi.Repository.Repositories;
 
-namespace BikeRentalAgencyApi.Controllers
+namespace CustomerRentalAgencyApi.Controllers
 {
-    [Route("Api/[Controller]")]
+    [Route("Api/Customer")]
     [ApiController]
     public class CustomerController : Controller
     {
-        public ICustomerRepository _customerRepository;
-
-        public CustomerController(ICustomerRepository cusotmerRepository)
+        private readonly ICustomerRepository _CustomerRepository;
+        public CustomerController(ICustomerRepository customerrepository)
         {
-            _customerRepository = cusotmerRepository;
+            _CustomerRepository = customerrepository;
         }
 
-        [HttpPost("AddCustomer")]
-        public async Task<Object> AddCustomer([FromBody] Customer customer)
+        [HttpPost]
+        [Route("AddCustomer")]
+        public async Task<IActionResult> AddCustomer([FromBody] Customer Customer)
         {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var CustomerId = await _CustomerRepository.AddCustomer(Customer);
+                    if (CustomerId > 0)
+                    {
+                        return Ok(CustomerId);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                catch (Exception)
+                {
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
+        }
+        [HttpGet]
+        [Route("GetCustomer/{CustomerId}")]
+        public async Task<IActionResult> GetCustomer(int? CustomerId)
+        {
+            if (CustomerId == null) { return BadRequest(); }
             try
             {
-                await _customerRepository.AddCustomer(customer);
-                return true;
+                var Customer = await _CustomerRepository.GetCustomer(CustomerId);
+                if (Customer == null)
+                {
+                    return NotFound();
+                }
+                return Ok(Customer);
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
         }
-
-        [HttpPost("DeleteCustomer/{id}")]
-        public async Task<Object> DeleteCustomer([FromBody] int? id)
+        [HttpPost]
+        [Route("DeleteCustomer/{id}")]
+        public async Task<IActionResult> DeleteCustomer(int? CustomerId)
         {
+            int result = 0;
+            if (CustomerId == null)
+            {
+                return BadRequest();
+            }
             try
             {
-                await _customerRepository.DeleteCustomer(id);
-                return true;
+                result = await _CustomerRepository.DeleteCustomer(CustomerId);
+                if (result == 0)
+                {
+                    return NotFound();
+                }
+                return Ok();
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
         }
-
-        [HttpGet("GetCustomer/{id}")]
-        public async Task<Object> GetCustomer([FromBody] int? id)
+        [HttpGet]
+        [Route("GetCustomers")]
+        public async Task<IActionResult> GetCustomers()
         {
             try
             {
-                await _customerRepository.GetCustomer(id);
-                return true;
+                var Customers = await _CustomerRepository.GetCustomers();
+                if (Customers == null)
+                {
+                    return NotFound();
+                }
+                return Ok(Customers);
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
+            //try
+            //{
+            //    List<Customer> Customers = await _CustomerRepository.GetCustomers();
+            //    return Customers;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
         }
-
-        [HttpPost("GetAllCustomers")]
-        public async Task<Object> GetCustomers()
+        [HttpPost]
+        [Route("UpdateCustomer")]
+        public async Task<IActionResult> UpdateCustomer([FromBody] Customer model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                await _customerRepository.GetCustomers();
-                return true;
+                try
+                {
+                    await _CustomerRepository.UpdateCustomer(model);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetType().FullName ==
+                        "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException")
+                    {
+                        return NotFound();
+                    }
+                    return BadRequest();
+                }
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            return BadRequest();
         }
-
-        [HttpPost("UpdateCustomer")]
-        public async Task<Object> UpdateCustomer([FromBody] Customer customer)
-        {
-            try
-            {
-                await _customerRepository.UpdateCustomer(customer);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
     }
 }

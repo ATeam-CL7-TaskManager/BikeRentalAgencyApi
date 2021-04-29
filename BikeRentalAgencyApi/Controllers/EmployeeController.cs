@@ -3,91 +3,138 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BikeRentalAgencyApi.Models;
 using BikeRentalAgencyApi.Repository;
+using BikeRentalAgencyApi.Models;
 using BikeRentalAgencyApi.Repository.Repositories;
 
-namespace BikeRentalAgencyApi.Controllers
+namespace EmployeeRentalAgencyApi.Controllers
 {
-    [Route("Api/[Controller]")]
+    [Route("Api/Employee")]
     [ApiController]
     public class EmployeeController : Controller
     {
-
-        public IEmployeeRepository _employeeRepository;
-        public EmployeeController(IEmployeeRepository employeerepoistory)
+        private readonly IEmployeeRepository _EmployeeRepository;
+        public EmployeeController(IEmployeeRepository employeeerepository)
         {
-            _employeeRepository = employeerepoistory;
+            _EmployeeRepository = employeeerepository;
         }
 
-        [HttpPost("AddEmployee")]
-        public async Task<Object> AddEmployee([FromBody] Employee employee)
+        [HttpPost]
+        [Route("AddEmployee")]
+        public async Task<IActionResult> AddEmployee([FromBody] Employee Employee)
         {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var EmployeeId = await _EmployeeRepository.AddEmployee(Employee);
+                    if (EmployeeId > 0)
+                    {
+                        return Ok(EmployeeId);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                catch (Exception)
+                {
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
+        }
+        [HttpGet]
+        [Route("GetEmployee/{EmployeeId}")]
+        public async Task<IActionResult> GetEmployee(int? EmployeeId)
+        {
+            if (EmployeeId == null) { return BadRequest(); }
             try
             {
-                await _employeeRepository.AddEmployee(employee);
-                return true;
+                var Employee = await _EmployeeRepository.GetEmployee(EmployeeId);
+                if (Employee == null)
+                {
+                    return NotFound();
+                }
+                return Ok(Employee);
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
         }
-
-        [HttpPost("DeleteEmployee/{id}")]
-        public async Task<Object> DeleteEmployee([FromBody] int? id)
+        [HttpPost]
+        [Route("DeleteEmployee/{id}")]
+        public async Task<IActionResult> DeleteEmployee(int? EmployeeId)
         {
+            int result = 0;
+            if (EmployeeId == null)
+            {
+                return BadRequest();
+            }
             try
             {
-                await _employeeRepository.DeleteEmployee(id);
-                return true;
+                result = await _EmployeeRepository.DeleteEmployee(EmployeeId);
+                if (result == 0)
+                {
+                    return NotFound();
+                }
+                return Ok();
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
         }
-
-        [HttpGet("GetEmployee/{id}")]
-        public async Task<Object> GetEmployee([FromBody] int? employeeId)
+        [HttpGet]
+        [Route("GetEmployees")]
+        public async Task<IActionResult> GetEmployees()
         {
             try
             {
-                await _employeeRepository.GetEmployee(employeeId);
-                return true;
+                var Employees = await _EmployeeRepository.GetEmployees();
+                if (Employees == null)
+                {
+                    return NotFound();
+                }
+                return Ok(Employees);
             }
             catch (Exception)
             {
-                return false;
+                return BadRequest();
             }
+            //try
+            //{
+            //    List<Employee> Employees = await _EmployeeRepository.GetEmployees();
+            //    return Employees;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
         }
-
-        [HttpGet("GetEmployees")]
-        public async Task<Object> GetEmployees()
+        [HttpPost]
+        [Route("UpdateEmployee")]
+        public async Task<IActionResult> UpdateEmployee([FromBody] Employee model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                await _employeeRepository.GetEmployees();
-                return true;
+                try
+                {
+                    await _EmployeeRepository.UpdateEmployee(model);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetType().FullName ==
+                        "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException")
+                    {
+                        return NotFound();
+                    }
+                    return BadRequest();
+                }
             }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        [HttpGet("UpdateEmployee")]
-        public async Task<Object> UpdateEmployees([FromBody] Employee employee)
-        {
-            try
-            {
-                await _employeeRepository.UpdateEmployee(employee);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return BadRequest();
         }
     }
 }

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace BikeRentalAgencyApi.Repository.Repositories
 {
-    public class StoresRepository : IStoreRepository
+    public class StoreRepository : IStoreRepository
     {
         BikeStoreContext db;
-        public StoresRepository(BikeStoreContext _db)
+        public StoreRepository(BikeStoreContext _db)
         {
             db = _db;
         }

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BikeRentalAgencyApi.Repository;
+using BikeRentalAgencyApi.Repository.Repositories;
 using BikeRentalAgencyApi.Models;
 using BikeRentalAgencyApi.Repository.Interfaces;
 

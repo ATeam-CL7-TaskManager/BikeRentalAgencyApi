@@ -7,7 +7,7 @@ using BikeRentalAgencyApi.Repository;
 using BikeRentalAgencyApi.Models;
 using BikeRentalAgencyApi.Repository.Interfaces;
 
-namespace CustomerRentalAgencyApi.Controllers
+namespace BikeRentalAgencyApi.Controllers
 {
     [Route("Api/Customer")]
     [ApiController]

@@ -36,6 +36,7 @@ namespace BikeRentalAgencyApi
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IReservationRepository, ReservationRepository>();
             services.AddTransient<IStoreRepository, StoreRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
 
 
             services.AddDbContext<BikeStoreContext>(options =>

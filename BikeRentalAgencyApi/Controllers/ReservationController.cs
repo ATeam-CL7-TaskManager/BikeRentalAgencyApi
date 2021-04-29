@@ -7,7 +7,7 @@ using BikeRentalAgencyApi.Repository;
 using BikeRentalAgencyApi.Models;
 using BikeRentalAgencyApi.Repository.Interfaces;
 
-namespace ReservationRentalAgencyApi.Controllers
+namespace BikeRentalAgencyApi.Controllers
 {
     [Route("Api/Reservation")]
     [ApiController]

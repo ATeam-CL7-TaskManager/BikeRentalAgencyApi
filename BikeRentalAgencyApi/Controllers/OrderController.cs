@@ -7,13 +7,13 @@ using BikeRentalAgencyApi.Repository;
 using BikeRentalAgencyApi.Models;
 using BikeRentalAgencyApi.Repository.Interfaces;
 
-namespace OrderRentalAgencyApi.Controllers
+namespace BikeRentalAgencyApi.Controllers
 {
     [Route("Api/Order")]
     [ApiController]
     public class OrderController : Controller
     {
-        private readonly IOrderRepository _OrderRepository;
+        readonly IOrderRepository _OrderRepository;
         public OrderController(IOrderRepository orderrepository)
         {
             _OrderRepository = orderrepository;
@@ -37,7 +37,7 @@ namespace OrderRentalAgencyApi.Controllers
                         return NotFound();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     return BadRequest();
                 }
@@ -58,13 +58,13 @@ namespace OrderRentalAgencyApi.Controllers
                 }
                 return Ok(Order);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest();
             }
         }
         [HttpPost]
-        [Route("DeleteOrder/{id}")]
+        [Route("DeleteOrder/{OrderId}")]
         public async Task<IActionResult> DeleteOrder(int? OrderId)
         {
             int result = 0;
@@ -81,7 +81,7 @@ namespace OrderRentalAgencyApi.Controllers
                 }
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest();
             }
@@ -99,7 +99,7 @@ namespace OrderRentalAgencyApi.Controllers
                 }
                 return Ok(Orders);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest();
             }

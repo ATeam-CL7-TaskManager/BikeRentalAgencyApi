@@ -21,9 +21,6 @@ namespace BikeRentalAgencyApi.Models
             ErrorMessage = "Please enter a positive price")]
         [Column(TypeName = "decimal(8, 2)")]
         public decimal ReservationTotal { get; set; }
-        [Required]
-        [Range(0.01, double.MaxValue,
-            ErrorMessage = "Please enter a positive price")]
         [Column(TypeName = "decimal(8, 2)")]
         public decimal AccessoriesTotal { get; set; }
         public bool IsStarted { get; set; }

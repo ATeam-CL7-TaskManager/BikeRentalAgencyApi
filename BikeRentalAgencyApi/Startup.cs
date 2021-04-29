@@ -1,6 +1,7 @@
 using BikeRentalAgencyApi.Models;
 using BikeRentalAgencyApi.Repository;
 using BikeRentalAgencyApi.Repository.Repositories;
+using BikeRentalAgencyApi.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

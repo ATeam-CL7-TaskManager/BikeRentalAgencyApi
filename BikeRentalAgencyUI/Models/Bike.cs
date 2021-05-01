@@ -17,6 +17,5 @@ namespace BikeRentalAgencyUI.Models
         public bool MTBSuspension {get;set;}
         public bool AllTerrainTires { get; set; }
         public string BikeStyle { get; set; }
-
     }
 }

@@ -80,7 +80,7 @@ namespace BikeRentalAgencyUI.Controllers
 
             if (succeeded) return RedirectToAction("Index");
 
-            var model = new PostViewModel
+            var model = new BikeViewModel
             {
                 Post = post
             };
@@ -93,7 +93,7 @@ namespace BikeRentalAgencyUI.Controllers
 
         public async Task<ActionResult> Details(int id)
         {
-            var model = new PostViewModel
+            var model = new BikeViewModel
             {
                 Post = await repository.GetPost(id)
             };

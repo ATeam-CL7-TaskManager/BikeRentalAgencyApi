@@ -1,0 +1,39 @@
+﻿@model BikeRentalAgencyUI.Models.OrderViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="row">
+    </dl>
+
+    <form asp-action="Delete">
+
+        <div class="form-group">
+            <label asp-for="Order.OrderID" class="control-label"></label>
+            <input asp-for="Order.OrderID" class="form-control" readonly />
+            <span asp-validation-for="Order.OrderID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Order.CustomerID" class="control-label"></label>
+            <input asp-for="Order.CustomerID" class="form-control" />
+            <span asp-validation-for="Order.CustomerID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Order.EmployeeID" class="control-label"></label>
+            <input asp-for="Order.EmployeeID" class="form-control" />
+            <span asp-validation-for="Order.EmployeeID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

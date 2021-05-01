@@ -1,0 +1,83 @@
+﻿@model ReservationViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Reservation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Reservation.ReservationID" class="control-label"></label>
+                <input asp-for="Reservation.ReservationID" class="form-control" readonly />
+                <span asp-validation-for="Reservation.ReservationID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.BikeID" class="control-label"></label>
+                <input asp-for="Reservation.BikeID" class="form-control" readonly />
+                <span asp-validation-for="Reservation.BikeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.StartDate" class="control-label"></label>
+                <input asp-for="Reservation.StartDate" class="form-control" />
+                <span asp-validation-for="Reservation.StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.EndDate" class="control-label"></label>
+                <input asp-for="Reservation.EndDate" class="form-control" />
+                <span asp-validation-for="Reservation.EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.IsComplete" class="control-label"></label>
+                <input asp-for="Reservation.IsComplete" class="form-control" />
+                <span asp-validation-for="Reservation.IsComplete" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.HomeStoreID" class="control-label"></label>
+                <input asp-for="Reservation.HomeStoreID" type="date" class="form-control" />
+                <span asp-validation-for="Reservation.HomeStoreID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.RentedStoreID" class="control-label"></label>
+                <input asp-for="Reservation.RentedStoreID" type="date" class="form-control" />
+                <span asp-validation-for="Reservation.RentedStoreID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.ReservationTotal" class="control-label"></label>
+                <input asp-for="Reservation.ReservationTotal" type="date" class="form-control" />
+                <span asp-validation-for="Reservation.ReservationTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.AccessoriesTotal" class="control-label"></label>
+                <input asp-for="Reservation.AccessoriesTotal" type="date" class="form-control" />
+                <span asp-validation-for="Reservation.AccessoriesTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.IsStarted" class="control-label"></label>
+                <input asp-for="Reservation.IsStarted" type="date" class="form-control" />
+                <span asp-validation-for="Reservation.IsStarted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation.OrderID" class="control-label"></label>
+                <input asp-for="Reservation.OrderID" type="date" class="form-control" />
+                <span asp-validation-for="Reservation.OrderID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

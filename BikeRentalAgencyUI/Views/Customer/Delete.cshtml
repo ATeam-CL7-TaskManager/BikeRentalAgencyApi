@@ -1,0 +1,46 @@
+﻿@model BikeRentalAgencyUI.Models.CustomerViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="row">
+    </dl>
+
+    <form asp-action="Delete">
+
+        <div class="form-group">
+            <label asp-for="Customer.CustomerID" class="control-label"></label>
+            <input asp-for="Customer.CustomerID" class="form-control" readonly />
+            <span asp-validation-for="Customer.CustomerID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Customer.FirstName" class="control-label"></label>
+            <input asp-for="Customer.FirstName" class="form-control" />
+            <span asp-validation-for="Customer.FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Customer.LastName" class="control-label"></label>
+            <input asp-for="Customer.LastName" class="form-control" />
+            <span asp-validation-for="Customer.LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Customer.Phone" class="control-label"></label>
+            <input asp-for="Customer.Phone" class="form-control" />
+            <span asp-validation-for="Customer.Phone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Customer.Email" class="control-label"></label>
+            <input asp-for="Customer.Email" type="date" class="form-control" />
+            <span asp-validation-for="Customer.Email" class="text-danger"></span>
+        </div>
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

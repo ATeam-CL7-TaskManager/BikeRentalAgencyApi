@@ -1,0 +1,62 @@
+﻿@model BikeRentalAgencyUI.Models.StoreViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Store</h4>
+    <hr />
+    <dl class="row">
+    </dl>
+
+    <form asp-action="Delete">
+
+
+        <div class="form-group">
+            <label asp-for="Store.StoreID" class="control-label"></label>
+            <input asp-for="Store.StoreID" class="form-control" />
+            <span asp-validation-for="Store.StoreID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Store.AddressLine1" class="control-label"></label>
+            <input asp-for="Store.AddressLine1" class="form-control" readonly />
+            <span asp-validation-for="Store.AddressLine1" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Store.AddressLine2" class="control-label"></label>
+            <input asp-for="Store.AddressLine2" class="form-control" readonly />
+            <span asp-validation-for="Store.AddressLine2" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Store.City" class="control-label"></label>
+            <input asp-for="Store.City" class="form-control" />
+            <span asp-validation-for="Store.City" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Store.State" class="control-label"></label>
+            <input asp-for="Store.State" class="form-control" />
+            <span asp-validation-for="Store.State" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Store.Zip" class="control-label"></label>
+            <input asp-for="Store.Zip" type="date" class="form-control" />
+            <span asp-validation-for="Store.Zip" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Store.Phone" class="control-label"></label>
+            <input asp-for="Store.Phone" type="date" class="form-control" />
+            <span asp-validation-for="Store.Phone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Store.Email" class="control-label"></label>
+            <input asp-for="Store.Email" type="date" class="form-control" />
+            <span asp-validation-for="Store.Email" class="text-danger"></span>
+        </div>
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

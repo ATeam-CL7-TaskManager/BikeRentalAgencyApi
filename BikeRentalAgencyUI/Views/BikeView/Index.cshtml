@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Bike>
+
+@{
+    ViewData["Bikes"] = "Index";
+}
+
+<h1>Bikes</h1>
+<p>
+    <a asp-action="Edit">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BikeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HourlyRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FrameSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorized)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MTBSuspension)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllTerrainTires)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BikeStyle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BikeID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StoreID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HourlyRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrameSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Motorized)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MTBSuspension)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllTerrainTires)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BikeStyle)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BikeID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BikeID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BikeID })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Reservation>
+
+@{
+    ViewData["Reservations"] = "Index";
+}
+
+<h1>Reservation</h1>
+<p>
+    <a asp-action="Edit">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ReservationID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BikeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsComplete)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HomeStoreID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RentedStoreID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReservationTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccessoriesTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsStarted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BikeID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsComplete)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HomeStoreID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentedStoreID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessoriesTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsStarted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ReservationID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ReservationID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ReservationID })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

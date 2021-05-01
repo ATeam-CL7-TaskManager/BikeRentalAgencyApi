@@ -1,0 +1,46 @@
+﻿@model BikeRentalAgencyUI.Models.EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="row">
+    </dl>
+
+    <form asp-action="Delete">
+
+        <div class="form-group">
+            <label asp-for="Employee.EmployeeID" class="control-label"></label>
+            <input asp-for="Employee.EmployeeID" class="form-control" readonly />
+            <span asp-validation-for="Employee.EmployeeID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Employee.FirstName" class="control-label"></label>
+            <input asp-for="Employee.FirstName" class="form-control" />
+            <span asp-validation-for="Employee.FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Employee.LastName" class="control-label"></label>
+            <input asp-for="Employee.LastName" class="form-control" />
+            <span asp-validation-for="Employee.LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Employee.StoreID" class="control-label"></label>
+            <input asp-for="Employee.StoreID" class="form-control" />
+            <span asp-validation-for="Employee.StoreID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Employee.Supervisor" class="control-label"></label>
+            <input asp-for="Employee.Supervisor" type="date" class="form-control" />
+            <span asp-validation-for="Employee.Supervisor" class="text-danger"></span>
+        </div>
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

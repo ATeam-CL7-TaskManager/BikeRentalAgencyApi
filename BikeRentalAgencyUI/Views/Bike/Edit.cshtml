@@ -13,10 +13,11 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-group">
-                <label asp-for="Bike.BikeID" class="control-label"></label>
-                <input asp-for="Bike.BikeID" class="form-control" readonly />
-                <span asp-validation-for="Bike.BikeID" class="text-danger"></span>
-            </div>*@
+            <label asp-for="Bike.BikeID" class="control-label"></label>
+            <input asp-for="Bike.BikeID" class="form-control" readonly />
+            <span asp-validation-for="Bike.BikeID" class="text-danger"></span>
+        </div>*@
+            <input type="hidden" asp-for="Bike.BikeID" />
             <div class="form-group">
                 <label asp-for="Bike.StoreID" class="control-label"></label>
                 <input asp-for="Bike.StoreID" class="form-control" />
@@ -34,27 +35,27 @@
             </div>
             <div class="form-group">
                 <label asp-for="Bike.FrameSize" class="control-label"></label>
-                <input asp-for="Bike.FrameSize"  class="form-control" />
+                <input asp-for="Bike.FrameSize" class="form-control" />
                 <span asp-validation-for="Bike.FrameSize" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Bike.Motorized" class="control-label"></label>
-                <input asp-for="Bike.Motorized"  class="form-control" />
+                <input asp-for="Bike.Motorized" class="form-control" />
                 <span asp-validation-for="Bike.Motorized" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Bike.MTBSuspension" class="control-label"></label>
-                <input asp-for="Bike.MTBSuspension"  class="form-control" />
+                <input asp-for="Bike.MTBSuspension" class="form-control" />
                 <span asp-validation-for="Bike.MTBSuspension" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Bike.AllTerrainTires" class="control-label"></label>
-                <input asp-for="Bike.AllTerrainTires"  class="form-control" />
+                <input asp-for="Bike.AllTerrainTires" class="form-control" />
                 <span asp-validation-for="Bike.AllTerrainTires" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Bike.BikeStyle" class="control-label"></label>
-                <input asp-for="Bike.BikeStyle"  class="form-control" />
+                <input asp-for="Bike.BikeStyle" class="form-control" />
                 <span asp-validation-for="Bike.BikeStyle" class="text-danger"></span>
             </div>
             <div class="form-group">

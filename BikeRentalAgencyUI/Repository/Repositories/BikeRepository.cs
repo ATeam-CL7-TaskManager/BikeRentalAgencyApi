@@ -41,7 +41,7 @@ namespace BikeRentalAgencyUI.Repository.Repositories
                 client.BaseAddress = new Uri(baseUrl);
                 //Sending request to find web api REST service resource UpdatePost using HttpClient  
                 HttpResponseMessage res = await client.DeleteAsync(
-                    $"bike/Deletebike?bikeId={bikeId}");
+                    $"Bike/DeleteBike/{bikeId}");
                 succeeded = res.IsSuccessStatusCode;
             }
             return succeeded;

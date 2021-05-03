@@ -42,10 +42,6 @@ namespace BikeRentalAgencyUI.Controllers
 
             //}
         }
-        IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         IActionResult Error()

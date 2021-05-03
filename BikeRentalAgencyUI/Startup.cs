@@ -1,15 +1,12 @@
+using BikeRentalAgencyUI.Models;
 using BikeRentalAgencyUI.Repository.Interfaces;
 using BikeRentalAgencyUI.Repository.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BikeRentalAgencyUI
 {
@@ -26,11 +23,16 @@ namespace BikeRentalAgencyUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
             services.AddTransient<IBikeRepository, BikeRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IReservationRepository, ReservationRepository>();
             services.AddTransient<IStoreRepository, StoreRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+
+            services.AddDbContext<BikeStoreContext>(options =>
+                options.UseSqlServer(Configuration["ConnectionStrings:BikeStoreContext"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +50,7 @@ namespace BikeRentalAgencyUI
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            
             app.UseRouting();
 
             app.UseAuthorization();

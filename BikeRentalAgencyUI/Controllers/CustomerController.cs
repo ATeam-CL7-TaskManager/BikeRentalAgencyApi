@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BikeRentalAgencyUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace BikeRentalAgencyUI.Controllers
@@ -10,9 +13,29 @@ namespace BikeRentalAgencyUI.Controllers
     public class CustomerController : Controller
     {
         // GET: Customer
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            IEnumerable<Customer> customer = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri("http://localhost:5000/Api/");
+
+                var responseTask = await client.GetAsync("Customer/GetCustomers");
+                if (responseTask.IsSuccessStatusCode)
+                {
+                    var result = responseTask.Content.ReadAsStringAsync().Result;
+                    customer = JsonConvert.DeserializeObject<IEnumerable<Customer>>(result);
+                }
+
+                else
+                {
+                    customer = (IEnumerable<Customer>)Enumerable.Empty<Customer>();
+                    ModelState.AddModelError(string.Empty, "error");
+                }
+
+            }
+            return View(customer);
         }
 
         // GET: Customer/Details/5

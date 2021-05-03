@@ -1,18 +1,44 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BikeRentalAgencyUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace BikeRentalAgencyUI.Controllers
 {
     public class StoreController : Controller
     {
+
+
         // GET: StoreController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            IEnumerable<Store> store = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri("http://localhost:5000/Api/");
+
+                var responseTask = await client.GetAsync("Store/GetStores");
+                if (responseTask.IsSuccessStatusCode)
+                {
+                    var result = responseTask.Content.ReadAsStringAsync().Result;
+                    store = JsonConvert.DeserializeObject<IEnumerable<Store>>(result);
+                }
+
+                else
+                {
+                    store = (IEnumerable<Store>)Enumerable.Empty<Store>();
+                    ModelState.AddModelError(string.Empty, "error");
+                }
+
+            }
+            return View(store);
+
         }
 
         // GET: StoreController/Details/5

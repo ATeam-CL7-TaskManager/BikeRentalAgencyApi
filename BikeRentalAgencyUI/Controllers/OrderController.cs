@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BikeRentalAgencyUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,25 +10,25 @@ namespace BikeRentalAgencyUI.Controllers
 {
     public class OrderController : Controller
     {
-        // GET: OrderController
+        // GET: Order
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: OrderController/Details/5
+        // GET: Order/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: OrderController/Create
+        // GET: Order/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: OrderController/Create
+        // POST: Order/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -42,13 +43,13 @@ namespace BikeRentalAgencyUI.Controllers
             }
         }
 
-        // GET: OrderController/Edit/5
+        // GET: Order/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: OrderController/Edit/5
+        // POST: Order/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -63,13 +64,13 @@ namespace BikeRentalAgencyUI.Controllers
             }
         }
 
-        // GET: OrderController/Delete/5
+        // GET: Order/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: OrderController/Delete/5
+        // POST: Order/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

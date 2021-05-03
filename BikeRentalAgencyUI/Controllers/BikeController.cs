@@ -1,123 +1,38 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BikeRentalAgencyUI.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using BikeRentalAgencyUI.Repository.Interfaces;
-using BikeRentalAgencyUI.Models;
-
 
 namespace BikeRentalAgencyUI.Controllers
 {
     public class BikeController : Controller
     {
-        private string baseUrl = "https://localhost:44305/";
-        private IBikeRepository repository;
-        public BikeController(IBikeRepository repository)
+        public async Task<IActionResult> Index()
         {
-            this.repository = repository;
-        }
-        public async Task<ActionResult> Index()
-        {
-           // var model = await repository.GetBikes(int? Bike);
-            return View();
-        }
+            IEnumerable<Bike> bike = null;
 
-
-
-        [HttpGet]
-        public async Task<ActionResult> Edit(int? id)
-        {
-            var model = new BikeViewModel();
-            if (id == null)
+            using (var client = new HttpClient())
             {
-                model.Bike = new Bike();
-                model.Bikes = await repository.GetBikes(model?.Bike?.BikeID);
-                return View(model);
-            }
+                client.BaseAddress = new System.Uri("http://localhost:5000/Api/");
 
-            model.Bike = await repository.GetBike(id);
-            model.Bikes = await repository.GetBikes(model?.Bike?.BikeID);
-            return View(model);
-        }
-
-
-
-        [HttpPost]
-        public async Task<ActionResult> Edit(Bike post)
-        {
-            TempData["message"] = string.Empty;
-            string message;
-
-            if (post == null) return View(new Bike());
-
-            bool succeeded;
-            //add new post
-            if (post.PostId == 0)
-            {
-                succeeded = await repository.AddPost(post);
-                message = $"{post.Title} has not been added";
-
-                //Checking the response is successful or not   
-                if (succeeded)
+                var responseTask = await client.GetAsync("Bike/GetBikes");
+                if (responseTask.IsSuccessStatusCode)
                 {
-                    message = $"{post.Title} has been added";
+                    var result = responseTask.Content.ReadAsStringAsync().Result;
+                    bike = JsonConvert.DeserializeObject<IEnumerable<Bike>>(result);
+                }
+
+                else
+                {
+                    bike = (IEnumerable<Bike>)Enumerable.Empty<Bike>();
+                    ModelState.AddModelError(string.Empty, "error");
                 }
             }
-            else
-            {
-                //update existing post
-                succeeded = await repository.UpdatePost(post);
-                message = $"{post.Title} has not been saved";
-                //Checking the response is successful or not   
-                if (succeeded)
-                {
-                    message = $"{post.Title} has been saved";
-                }
-            }
-            TempData["message"] = message;
-
-            if (succeeded) return RedirectToAction("Index");
-
-            var model = new BikeViewModel
-            {
-                Post = post
-            };
-            model.Categories = await repository.GetCategories(post.CategoryId);
-            return View(model);
-        }
-
-
-
-
-        public async Task<ActionResult> Details(int id)
-        {
-            var model = new BikeViewModel
-            {
-                Post = await repository.GetPost(id)
-            };
-            model.Categories = await repository.GetCategories(model?.Post?.CategoryId);
-
-            return View(model);
-        }
-
-
-
-
-
-        [HttpGet]
-        public async Task<ActionResult> Delete(int id)
-        {
-            TempData["message"] = string.Empty;
-            bool succeeded = await repository.DeletePost(id);
-            TempData["message"] = $"Post not deleted";
-            if (succeeded)
-            {
-                TempData["message"] = $"Post deleted";
-            }
-            //returning to view  
-            return RedirectToAction("Index");
+            return View(bike);
         }
     }
 }

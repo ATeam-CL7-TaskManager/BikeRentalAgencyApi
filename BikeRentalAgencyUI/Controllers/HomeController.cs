@@ -20,7 +20,7 @@ namespace BikeRentalAgencyUI.Controllers
             _logger = logger;
         }
 
-        public async Task<ActionResult> Index()
+        public IActionResult Index()
         {
             return View();
             //Bike ResInfo = new();
@@ -39,18 +39,18 @@ namespace BikeRentalAgencyUI.Controllers
             //        ResInfo = JsonConvert.DeserializeObject<Bike>(ResResponse);
             //    }
             //    return View(ResInfo);
-            
+
+            //}
         }
         IActionResult Privacy()
-            {
-                return View();
-            }
+        {
+            return View();
+        }
 
-            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-            IActionResult Error()
-            {
-                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-            }
-        
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

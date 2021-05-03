@@ -7,8 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BikeRentalAgencyUI.Repository.Interfaces;
-using BikeRentalAgencyUI.Repository.Repositories;
+using BikeRentalAgencyUI.Repository;
 
 namespace BikeRentalAgencyUI.Controllers
 {
@@ -19,67 +18,25 @@ namespace BikeRentalAgencyUI.Controllers
         {
             this.repository = repository;
         }
-        // GET: HomeController1
-        public async Task<ActionResult> Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<Employee> employee = null;
-
-            using (var client = new HttpClient())
+            var model = await repository.GetEmployees();
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<ActionResult> Edit(int? id)
+        {
+            var model = new EmployeeViewModel();
+            if (id == null)
             {
-                client.BaseAddress = new System.Uri("http://localhost:5000/Api/");
-
-                var responseTask = await client.GetAsync("Employee/GetEmployees");
-                if (responseTask.IsSuccessStatusCode)
-                {
-                    var result = responseTask.Content.ReadAsStringAsync().Result;
-                    employee = JsonConvert.DeserializeObject<IEnumerable<Employee>>(result);
-                }
-
-                else
-                {
-                    employee = (IEnumerable<Employee>)Enumerable.Empty<Employee>();
-                    ModelState.AddModelError(string.Empty, "error");
-                }
-
+                model.Employee = new Employee();
+                return View(model);
             }
-            return View(employee);
 
+            model.Employee = await repository.GetEmployee(id);
+            //model.Employee
+            return View(model);
         }
-
-        // GET: HomeController1/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: HomeController1/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: HomeController1/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: HomeController1/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: HomeController1/Edit/5
         [HttpPost]
         public async Task<ActionResult> Edit(Employee employee)
         {
@@ -89,7 +46,7 @@ namespace BikeRentalAgencyUI.Controllers
             if (employee == null) return View(new EmployeeViewModel());
 
             bool succeeded;
-            //add new post
+            //add new employee
             if (employee.EmployeeID == 0)
             {
                 succeeded = await repository.AddEmployee(employee);
@@ -103,7 +60,7 @@ namespace BikeRentalAgencyUI.Controllers
             }
             else
             {
-                //update existing post
+                //update existing employee
                 succeeded = await repository.UpdateEmployee(employee);
                 message = $"{employee.EmployeeID} has not been saved";
                 //Checking the response is successful or not   
@@ -120,29 +77,31 @@ namespace BikeRentalAgencyUI.Controllers
             {
                 Employee = employee
             };
-            model.Employee = await repository.GetEmployee(employee.EmployeeID);
             return View(model);
         }
 
-            // GET: HomeController1/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: HomeController1/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Details(int id)
         {
-            try
+            var model = new EmployeeViewModel
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+                Employee = await repository.GetEmployee(id)
+            };
+
+            return View(model);
+        }
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
+        {
+            TempData["message"] = string.Empty;
+            bool succeeded = await repository.DeleteEmployee(id);
+            TempData["message"] = $"Employee not deleted";
+            if (succeeded)
             {
-                return View();
+                TempData["message"] = $"Employee deleted";
             }
+            //returning to view  
+            return RedirectToAction("Index");
         }
     }
 }

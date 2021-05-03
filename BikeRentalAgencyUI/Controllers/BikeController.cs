@@ -1,5 +1,5 @@
 ﻿using BikeRentalAgencyUI.Models;
-using BikeRentalAgencyUI.Repository.Interfaces;
+using BikeRentalAgencyUI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -13,7 +13,7 @@ namespace BikeRentalAgencyUI.Controllers
 {
     public class BikeController : Controller
     {
-        private IBikeRepository repository;
+        readonly IBikeRepository repository;
         public BikeController(IBikeRepository repository)
         {
             this.repository = repository;

@@ -1,5 +1,4 @@
-﻿using BikeRentalAgencyUI.Repository.Interfaces;
-using BikeRentalAgencyUI.Models;
+﻿using BikeRentalAgencyUI.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,11 +9,11 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 
-namespace BikeRentalAgencyUI.Repository.Repositories
+namespace BikeRentalAgencyUI.Repository
 {
     public class OrderRepository : IOrderRepository
     {
-        string baseUrl = "http://localhost:5000/api/";
+        readonly string baseUrl = "http://localhost:5000/api/";
         public async Task<bool> AddOrder(Order order)
         {
             using (var client = new HttpClient())

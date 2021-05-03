@@ -1,4 +1,5 @@
 ﻿using BikeRentalAgencyUI.Models;
+using BikeRentalAgencyUI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -12,99 +13,94 @@ namespace BikeRentalAgencyUI.Controllers
 {
     public class CustomerController : Controller
     {
-        // GET: Customer
-        public async Task<ActionResult> Index()
+        readonly ICustomerRepository repository;
+        public CustomerController(ICustomerRepository repository)
         {
-            IEnumerable<Customer> customer = null;
-
-            using (var client = new HttpClient())
+            this.repository = repository;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var model = await repository.GetCustomers();
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<ActionResult> Edit(int? id)
+        {
+            var model = new CustomerViewModel();
+            if (id == null)
             {
-                client.BaseAddress = new System.Uri("http://localhost:5000/Api/");
+                model.Customer = new Customer();
+                return View(model);
+            }
 
-                var responseTask = await client.GetAsync("Customer/GetCustomers");
-                if (responseTask.IsSuccessStatusCode)
+            model.Customer = await repository.GetCustomer(id);
+            //model.Customer
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<ActionResult> Edit(Customer customer)
+        {
+            TempData["message"] = string.Empty;
+            string message;
+
+            if (customer == null) return View(new CustomerViewModel());
+
+            bool succeeded;
+            //add new customer
+            if (customer.CustomerID == 0)
+            {
+                succeeded = await repository.AddCustomer(customer);
+                message = $"{customer.CustomerID} has not been added";
+
+                //Checking the response is successful or not   
+                if (succeeded)
                 {
-                    var result = responseTask.Content.ReadAsStringAsync().Result;
-                    customer = JsonConvert.DeserializeObject<IEnumerable<Customer>>(result);
+                    message = $"{customer.CustomerID} has been added";
                 }
-
-                else
+            }
+            else
+            {
+                //update existing customer
+                succeeded = await repository.UpdateCustomer(customer);
+                message = $"{customer.CustomerID} has not been saved";
+                //Checking the response is successful or not   
+                if (succeeded)
                 {
-                    customer = (IEnumerable<Customer>)Enumerable.Empty<Customer>();
-                    ModelState.AddModelError(string.Empty, "error");
+                    message = $"{customer.CustomerID} has been saved";
                 }
-
             }
-            return View(customer);
-        }
+            TempData["message"] = message;
 
-        // GET: Customer/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+            if (succeeded) return RedirectToAction("Index");
 
-        // GET: Customer/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Customer/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            var model = new CustomerViewModel
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                Customer = customer
+            };
+            return View(model);
         }
 
-        // GET: Customer/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
-        }
+            var model = new CustomerViewModel
+            {
+                Customer = await repository.GetCustomer(id)
+            };
 
-        // POST: Customer/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
-
-        // GET: Customer/Delete/5
-        public ActionResult Delete(int id)
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
-        }
-
-        // POST: Customer/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            TempData["message"] = string.Empty;
+            bool succeeded = await repository.DeleteCustomer(id);
+            TempData["message"] = $"Customer not deleted";
+            if (succeeded)
             {
-                return RedirectToAction(nameof(Index));
+                TempData["message"] = $"Customer deleted";
             }
-            catch
-            {
-                return View();
-            }
+            //returning to view  
+            return RedirectToAction("Index");
         }
     }
 }

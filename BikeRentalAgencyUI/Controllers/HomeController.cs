@@ -23,32 +23,14 @@ namespace BikeRentalAgencyUI.Controllers
         public IActionResult Index()
         {
             return View();
-            //Bike ResInfo = new();
-            //using (var client = new HttpClient())
-            //{
-            //    client.BaseAddress = new Uri(Baseurl);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage Res = await client.GetAsync("bike/getbikes?");
-            //    if (Res.IsSuccessStatusCode)
-            //    {
-            //        //Storing the response details recieved from web api   
-            //        var ResResponse = Res.Content.ReadAsStringAsync().Result;
-
-            //        //Deserializing the response recieved from web api and storing into the Employee list  
-            //        ResInfo = JsonConvert.DeserializeObject<Bike>(ResResponse);
-            //    }
-            //    return View(ResInfo);
-
-            //}
         }
-        IActionResult Privacy()
+        public IActionResult Privacy()
         {
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        IActionResult Error()
+        public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }

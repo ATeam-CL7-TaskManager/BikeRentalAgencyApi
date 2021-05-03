@@ -1,5 +1,4 @@
-﻿using BikeRentalAgencyUI.Repository.Interfaces;
-using BikeRentalAgencyUI.Models;
+﻿using BikeRentalAgencyUI.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 
-namespace BikeRentalAgencyUI.Repository.Repositories
+namespace BikeRentalAgencyUI.Repository
 {
     public class ReservationRepository : IReservationRepository
 {

@@ -1,4 +1,5 @@
-﻿using BikeRentalAgencyUI.Models;
+﻿using BikeRentalAgencyUI.Repository;
+using BikeRentalAgencyUI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -12,102 +13,94 @@ namespace BikeRentalAgencyUI.Controllers
 {
     public class ReservationController : Controller
     {
-        IEnumerable<Reservation> reservation = null;
-
-        // GET: Reservation
-        public async Task<ActionResult> Index()
+        readonly IReservationRepository repository;
+        public ReservationController(IReservationRepository repository)
         {
-
-
-            using (var client = new HttpClient())
+            this.repository = repository;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var model = await repository.GetReservations();
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<ActionResult> Edit(int? id)
+        {
+            var model = new ReservationViewModel();
+            if (id == null)
             {
-                client.BaseAddress = new System.Uri("http://localhost:5000/Api/");
+                model.Reservation = new Reservation();
+                return View(model);
+            }
 
-                var responseTask = await client.GetAsync("Reservation/GetReservations");
-                if (responseTask.IsSuccessStatusCode)
+            model.Reservation = await repository.GetReservation(id);
+            //model.Reservation
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<ActionResult> Edit(Reservation reservation)
+        {
+            TempData["message"] = string.Empty;
+            string message;
+
+            if (reservation == null) return View(new ReservationViewModel());
+
+            bool succeeded;
+            //add new reservation
+            if (reservation.ReservationID == 0)
+            {
+                succeeded = await repository.AddReservation(reservation);
+                message = $"{reservation.ReservationID} has not been added";
+
+                //Checking the response is successful or not   
+                if (succeeded)
                 {
-                    var result = responseTask.Content.ReadAsStringAsync().Result;
-                    reservation = JsonConvert.DeserializeObject<IEnumerable<Reservation>>(result);
+                    message = $"{reservation.ReservationID} has been added";
                 }
-
-                else
+            }
+            else
+            {
+                //update existing reservation
+                succeeded = await repository.UpdateReservation(reservation);
+                message = $"{reservation.ReservationID} has not been saved";
+                //Checking the response is successful or not   
+                if (succeeded)
                 {
-                    reservation = (IEnumerable<Reservation>)Enumerable.Empty<Reservation>();
-                    ModelState.AddModelError(string.Empty, "error");
+                    message = $"{reservation.ReservationID} has been saved";
                 }
-
             }
-            return View(reservation);
+            TempData["message"] = message;
 
-        }
+            if (succeeded) return RedirectToAction("Index");
 
-        // GET: Reservation/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Reservation/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Reservation/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            var model = new ReservationViewModel
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                Reservation = reservation
+            };
+            return View(model);
         }
 
-        // GET: Reservation/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
-        }
+            var model = new ReservationViewModel
+            {
+                Reservation = await repository.GetReservation(id)
+            };
 
-        // POST: Reservation/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
-
-        // GET: Reservation/Delete/5
-        public ActionResult Delete(int id)
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
-        }
-
-        // POST: Reservation/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            TempData["message"] = string.Empty;
+            bool succeeded = await repository.DeleteReservation(id);
+            TempData["message"] = $"Reservation not deleted";
+            if (succeeded)
             {
-                return RedirectToAction(nameof(Index));
+                TempData["message"] = $"Reservation deleted";
             }
-            catch
-            {
-                return View();
-            }
+            //returning to view  
+            return RedirectToAction("Index");
         }
     }
 }

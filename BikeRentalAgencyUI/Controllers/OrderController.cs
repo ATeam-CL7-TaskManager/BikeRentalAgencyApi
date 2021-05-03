@@ -1,4 +1,5 @@
-﻿using BikeRentalAgencyUI.Models;
+﻿using BikeRentalAgencyUI.Repository;
+using BikeRentalAgencyUI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,79 +11,95 @@ namespace BikeRentalAgencyUI.Controllers
 {
     public class OrderController : Controller
     {
-        // GET: Order
-        public ActionResult Index()
+        readonly IOrderRepository repository;
+        public OrderController(IOrderRepository repository)
         {
-            return View();
+            this.repository = repository;
         }
-
-        // GET: Order/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = await repository.GetOrders();
+            return View(model);
         }
-
-        // GET: Order/Create
-        public ActionResult Create()
+        [HttpGet]
+        public async Task<ActionResult> Edit(int? id)
         {
-            return View();
-        }
+            var model = new OrderViewModel();
+            if (id == null)
+            {
+                model.Order = new Order();
+                return View(model);
+            }
 
-        // POST: Order/Create
+            model.Order = await repository.GetOrder(id);
+            //model.Order
+            return View(model);
+        }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Edit(Order order)
         {
-            try
+            TempData["message"] = string.Empty;
+            string message;
+
+            if (order == null) return View(new OrderViewModel());
+
+            bool succeeded;
+            //add new order
+            if (order.OrderID == 0)
             {
-                return RedirectToAction(nameof(Index));
+                succeeded = await repository.AddOrder(order);
+                message = $"{order.OrderID} has not been added";
+
+                //Checking the response is successful or not   
+                if (succeeded)
+                {
+                    message = $"{order.OrderID} has been added";
+                }
             }
-            catch
+            else
             {
-                return View();
+                //update existing order
+                succeeded = await repository.UpdateOrder(order);
+                message = $"{order.OrderID} has not been saved";
+                //Checking the response is successful or not   
+                if (succeeded)
+                {
+                    message = $"{order.OrderID} has been saved";
+                }
             }
+            TempData["message"] = message;
+
+            if (succeeded) return RedirectToAction("Index");
+
+            var model = new OrderViewModel
+            {
+                Order = order
+            };
+            return View(model);
         }
 
-        // GET: Order/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: Order/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Details(int id)
         {
-            try
+            var model = new OrderViewModel
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                Order = await repository.GetOrder(id)
+            };
 
-        // GET: Order/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            return View(model);
         }
-
-        // POST: Order/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
         {
-            try
+            TempData["message"] = string.Empty;
+            bool succeeded = await repository.DeleteOrder(id);
+            TempData["message"] = $"Order not deleted";
+            if (succeeded)
             {
-                return RedirectToAction(nameof(Index));
+                TempData["message"] = $"Order deleted";
             }
-            catch
-            {
-                return View();
-            }
+            //returning to view  
+            return RedirectToAction("Index");
         }
     }
 }

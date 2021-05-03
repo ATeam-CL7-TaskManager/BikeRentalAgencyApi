@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BikeRentalAgencyUI.Models;
 
-namespace BikeRentalAgencyUI.Repository.Interfaces
+namespace BikeRentalAgencyUI.Repository
 {
     public interface ICustomerRepository
     {

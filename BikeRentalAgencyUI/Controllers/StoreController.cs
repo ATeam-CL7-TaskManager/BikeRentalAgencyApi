@@ -1,4 +1,5 @@
 ﻿using BikeRentalAgencyUI.Models;
+using BikeRentalAgencyUI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -12,102 +13,94 @@ namespace BikeRentalAgencyUI.Controllers
 {
     public class StoreController : Controller
     {
-
-
-        // GET: StoreController
-        public async Task<ActionResult> Index()
+        readonly IStoreRepository repository;
+        public StoreController(IStoreRepository repository)
         {
-            IEnumerable<Store> store = null;
-
-            using (var client = new HttpClient())
+            this.repository = repository;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var model = await repository.GetStores();
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<ActionResult> Edit(int? id)
+        {
+            var model = new StoreViewModel();
+            if (id == null)
             {
-                client.BaseAddress = new System.Uri("http://localhost:5000/Api/");
+                model.Store = new Store();
+                return View(model);
+            }
 
-                var responseTask = await client.GetAsync("Store/GetStores");
-                if (responseTask.IsSuccessStatusCode)
+            model.Store = await repository.GetStore(id);
+            //model.Store
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<ActionResult> Edit(Store store)
+        {
+            TempData["message"] = string.Empty;
+            string message;
+
+            if (store == null) return View(new StoreViewModel());
+
+            bool succeeded;
+            //add new store
+            if (store.StoreID == 0)
+            {
+                succeeded = await repository.AddStore(store);
+                message = $"{store.StoreID} has not been added";
+
+                //Checking the response is successful or not   
+                if (succeeded)
                 {
-                    var result = responseTask.Content.ReadAsStringAsync().Result;
-                    store = JsonConvert.DeserializeObject<IEnumerable<Store>>(result);
+                    message = $"{store.StoreID} has been added";
                 }
-
-                else
+            }
+            else
+            {
+                //update existing store
+                succeeded = await repository.UpdateStore(store);
+                message = $"{store.StoreID} has not been saved";
+                //Checking the response is successful or not   
+                if (succeeded)
                 {
-                    store = (IEnumerable<Store>)Enumerable.Empty<Store>();
-                    ModelState.AddModelError(string.Empty, "error");
+                    message = $"{store.StoreID} has been saved";
                 }
-
             }
-            return View(store);
+            TempData["message"] = message;
 
-        }
+            if (succeeded) return RedirectToAction("Index");
 
-        // GET: StoreController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: StoreController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: StoreController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            var model = new StoreViewModel
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                Store = store
+            };
+            return View(model);
         }
 
-        // GET: StoreController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
-        }
+            var model = new StoreViewModel
+            {
+                Store = await repository.GetStore(id)
+            };
 
-        // POST: StoreController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
-
-        // GET: StoreController/Delete/5
-        public ActionResult Delete(int id)
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
-        }
-
-        // POST: StoreController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            TempData["message"] = string.Empty;
+            bool succeeded = await repository.DeleteStore(id);
+            TempData["message"] = $"Store not deleted";
+            if (succeeded)
             {
-                return RedirectToAction(nameof(Index));
+                TempData["message"] = $"Store deleted";
             }
-            catch
-            {
-                return View();
-            }
+            //returning to view  
+            return RedirectToAction("Index");
         }
     }
 }

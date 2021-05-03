@@ -14,7 +14,7 @@ namespace BikeRentalAgencyUI.Repository.Repositories
 {
     public class BikeRepository : IBikeRepository
     {
-        string baseUrl = "http://localhost:5000/api/";
+        string baseUrl = "http://localhost:5000/Api/";
         public async Task<bool> AddBike(Bike bike)
         {
             using (var client = new HttpClient())
@@ -78,7 +78,7 @@ namespace BikeRentalAgencyUI.Repository.Repositories
         }
 
 
-            public async Task<bool> UpdateBike(Bike bike)
+        public async Task<bool> UpdateBike(Bike bike)
             {
                 using (var client = new HttpClient())
                 {
@@ -96,7 +96,7 @@ namespace BikeRentalAgencyUI.Repository.Repositories
             }
 
 
-            public async Task<Bike> GetBike(int? bikeId)
+        public async Task<Bike> GetBike(int? bikeId)
             {
                 Bike bike = new();
                 using (var client = new HttpClient())
@@ -109,7 +109,7 @@ namespace BikeRentalAgencyUI.Repository.Repositories
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                     //Sending request to find web api REST service resource GetPost using HttpClient  
-                    HttpResponseMessage res = await client.GetAsync($"Post/GetPost?postId={bikeId}");
+                    HttpResponseMessage res = await client.GetAsync($"Bike/GetBike/{bikeId}");
 
                     //Checking the response is successful or not which is sent using HttpClient  
                     if (res.IsSuccessStatusCode)

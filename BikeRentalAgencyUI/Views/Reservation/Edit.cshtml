@@ -12,14 +12,14 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Reservation.ReservationID" class="control-label"></label>
                 <input asp-for="Reservation.ReservationID" class="form-control" readonly />
                 <span asp-validation-for="Reservation.ReservationID" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Reservation.BikeID" class="control-label"></label>
-                <input asp-for="Reservation.BikeID" class="form-control" readonly />
+                <input asp-for="Reservation.BikeID" class="form-control"  />
                 <span asp-validation-for="Reservation.BikeID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Reservation.HomeStoreID" class="control-label"></label>
-                <input asp-for="Reservation.HomeStoreID" type="checkbox"class="form-control" />
+                <input asp-for="Reservation.HomeStoreID" class="form-control" />
                 <span asp-validation-for="Reservation.HomeStoreID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -59,7 +59,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Reservation.IsStarted" class="control-label"></label>
-                <input asp-for="Reservation.IsStarted" type="checkbox" class="form-control" />
+                <input asp-for="Reservation.IsStarted" class="form-control" />
                 <span asp-validation-for="Reservation.IsStarted" class="text-danger"></span>
             </div>
             <div class="form-group">

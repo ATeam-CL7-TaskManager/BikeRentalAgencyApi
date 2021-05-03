@@ -113,7 +113,7 @@ namespace BikeRentalAgencyApi.Controllers
             //    throw ex;
             //}
         }
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateStore")]
         public async Task<IActionResult> UpdateStore([FromBody] Store model)
         {

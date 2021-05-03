@@ -90,7 +90,7 @@ namespace BikeRentalAgencyUI.Controllers
 
             return View(model);
         }
-        [HttpDelete]
+        [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
             TempData["message"] = string.Empty;

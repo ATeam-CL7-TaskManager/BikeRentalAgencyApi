@@ -58,7 +58,7 @@ namespace BikeRentalAgencyUI.Repository
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 //Sending request to find web api REST service resource GetPosts using HttpClient  
-                HttpResponseMessage res = await client.GetAsync("Store/GetAllStores");
+                HttpResponseMessage res = await client.GetAsync("Store/GetStores");
 
                 //Checking the response is successful or not which is sent using HttpClient  
                 if (res.IsSuccessStatusCode)

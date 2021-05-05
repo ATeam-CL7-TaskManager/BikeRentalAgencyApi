@@ -45,7 +45,7 @@ namespace BikeRentalAgencyApi.Controllers
             return BadRequest();
         }
         [HttpGet]
-        [Route("GetStore/{storeId}")]
+        [Route("GetStore/{StoreId}")]
         public async Task<IActionResult> GetStore(int? storeId)
         {
             if (storeId == null) { return BadRequest(); }
@@ -63,8 +63,8 @@ namespace BikeRentalAgencyApi.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost]
-        [Route("DeleteStore/{id}")]
+        [HttpDelete]
+        [Route("DeleteStore/{StoreId}")]
         public async Task<IActionResult> DeleteStore(int? storeId)
         {
             int result;

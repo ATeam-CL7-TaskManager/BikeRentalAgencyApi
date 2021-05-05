@@ -23,7 +23,7 @@ namespace BikeRentalAgencyUI.Repository
 
                 //Sending request to find web api REST service resource AddPost using HttpClient  
                 HttpResponseMessage res = await client.PostAsJsonAsync(
-                    "employee/Addemployee", employee);
+                    "Employee/Addemployee", employee);
 
                 //Checking the response is successful or not which is sent using HttpClient  
                 return res.IsSuccessStatusCode;
@@ -39,7 +39,7 @@ namespace BikeRentalAgencyUI.Repository
                 client.BaseAddress = new Uri(baseUrl);
                 //Sending request to find web api REST service resource UpdatePost using HttpClient  
                 HttpResponseMessage res = await client.DeleteAsync(
-                    $"employee/Deleteemployee?employeeId={employeeId}");
+                    $"Employee/Deleteemployee/{employeeId}");
                 succeeded = res.IsSuccessStatusCode;
             }
             return succeeded;

@@ -58,12 +58,12 @@ namespace BikeRentalAgencyApi.Controllers
                 }
                 return Ok(Order);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest();
             }
         }
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteOrder/{OrderId}")]
         public async Task<IActionResult> DeleteOrder(int? OrderId)
         {
@@ -99,7 +99,7 @@ namespace BikeRentalAgencyApi.Controllers
                 }
                 return Ok(Orders);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest();
             }

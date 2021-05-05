@@ -78,53 +78,54 @@ namespace BikeRentalAgencyUI.Repository
 
 
         public async Task<bool> UpdateBike(Bike bike)
+        {
+            using (var client = new HttpClient())
+
             {
-                using (var client = new HttpClient())
-                {
-                    //Passing service base url  
-                    client.BaseAddress = new Uri(baseUrl);
 
-                    //Sending request to find web api REST service resource UpdatePost using HttpClient  
-                    HttpResponseMessage res = await client.PutAsJsonAsync(
-                        "bike/Updatebike", bike);
+                //Passing service base url  
+                client.BaseAddress = new Uri(baseUrl);
 
-                    //Checking the response is successful or not which is sent using HttpClient  
-                    return res.IsSuccessStatusCode;
+                //Sending request to find web api REST service resource UpdatePost using HttpClient  
+                HttpResponseMessage res = await client.PutAsJsonAsync(
+                    "Bike/Updatebike", bike);
 
-                }
+                //Checking the response is successful or not which is sent using HttpClient  
+                return res.IsSuccessStatusCode;
             }
-
+        }
 
         public async Task<Bike> GetBike(int? bikeId)
+        {
+            Bike bike = new();
+            using (var client = new HttpClient())
             {
-                Bike bike = new();
-                using (var client = new HttpClient())
+                //Passing service base url  
+                client.BaseAddress = new Uri(baseUrl);
+
+                client.DefaultRequestHeaders.Clear();
+                //Define request data format  
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //Sending request to find web api REST service resource GetPost using HttpClient  
+                HttpResponseMessage res = await client.GetAsync($"Bike/GetBike/{bikeId}");
+
+                //Checking the response is successful or not which is sent using HttpClient  
+                if (res.IsSuccessStatusCode)
                 {
-                    //Passing service base url  
-                    client.BaseAddress = new Uri(baseUrl);
+                    //Storing the response details received from web api   
+                    var response = res.Content.ReadAsStringAsync().Result;
 
-                    client.DefaultRequestHeaders.Clear();
-                    //Define request data format  
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    //Deserializing the response received from web api and storing into the Post object 
+                    bike = JsonConvert.DeserializeObject<Bike>(response);
 
-                    //Sending request to find web api REST service resource GetPost using HttpClient  
-                    HttpResponseMessage res = await client.GetAsync($"Bike/GetBike/{bikeId}");
-
-                    //Checking the response is successful or not which is sent using HttpClient  
-                    if (res.IsSuccessStatusCode)
-                    {
-                        //Storing the response details received from web api   
-                        var response = res.Content.ReadAsStringAsync().Result;
-
-                        //Deserializing the response received from web api and storing into the Post object 
-                        bike = JsonConvert.DeserializeObject<Bike>(response);
-
-                    }
                 }
-                //returning the post to view  
-                return bike;
             }
+            //returning the post to view  
+            return bike;
 
         }
+
     }
+}
 

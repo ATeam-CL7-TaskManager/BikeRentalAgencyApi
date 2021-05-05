@@ -1,13 +1,7 @@
 ﻿using BikeRentalAgencyUI.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using BikeRentalAgencyUI.Repository;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BikeRentalAgencyUI.Controllers
 {
@@ -90,7 +84,7 @@ namespace BikeRentalAgencyUI.Controllers
 
             return View(model);
         }
-        [HttpDelete]
+        [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
             TempData["message"] = string.Empty;

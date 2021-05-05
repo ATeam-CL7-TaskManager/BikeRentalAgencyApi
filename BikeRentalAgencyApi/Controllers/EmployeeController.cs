@@ -63,8 +63,8 @@ namespace BikeRentalAgencyApi.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost]
-        [Route("DeleteEmployee/{id}")]
+        [HttpDelete]
+        [Route("DeleteEmployee/{EmployeeId}")]
         public async Task<IActionResult> DeleteEmployee(int? EmployeeId)
         {
             int result = 0;

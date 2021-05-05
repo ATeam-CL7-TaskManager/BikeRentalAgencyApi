@@ -1,13 +1,10 @@
 ﻿using BikeRentalAgencyUI.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Net.Http.Headers;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace BikeRentalAgencyUI.Repository
 {
@@ -39,7 +36,7 @@ namespace BikeRentalAgencyUI.Repository
                 client.BaseAddress = new Uri(baseUrl);
                 //Sending request to find web api REST service resource UpdatePost using HttpClient  
                 HttpResponseMessage res = await client.DeleteAsync(
-                    $"reservation/Deletereservation?reservationId={reservationId}");
+                    $"reservation/Deletereservation/{reservationId}");
                 succeeded = res.IsSuccessStatusCode;
             }
             return succeeded;
@@ -47,7 +44,7 @@ namespace BikeRentalAgencyUI.Repository
 
         public async Task<List<Reservation>> GetReservations()
         {
-            List<Reservation> posts = new List<Reservation>();
+            List<Reservation> resrvations = new List<Reservation>();
             using (var client = new HttpClient())
             {
                 //Passing service base url  
@@ -67,11 +64,11 @@ namespace BikeRentalAgencyUI.Repository
                     var response = res.Content.ReadAsStringAsync().Result;
 
                     //Deserializing the response received from web api and storing into the Post list  
-                    posts = JsonConvert.DeserializeObject<List<Reservation>>(response);
+                    resrvations = JsonConvert.DeserializeObject<List<Reservation>>(response);
 
                 }
                 //returning the post list to view 
-                return posts;
+                return resrvations;
             }
         }
 
@@ -107,7 +104,7 @@ namespace BikeRentalAgencyUI.Repository
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 //Sending request to find web api REST service resource GetPost using HttpClient  
-                HttpResponseMessage res = await client.GetAsync($"Post/GetPost?postId={reservationId}");
+                HttpResponseMessage res = await client.GetAsync($"Reservation/GetReservation/{reservationId}");
 
                 //Checking the response is successful or not which is sent using HttpClient  
                 if (res.IsSuccessStatusCode)

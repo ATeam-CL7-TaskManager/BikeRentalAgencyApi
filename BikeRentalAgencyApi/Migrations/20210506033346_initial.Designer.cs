@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeRentalAgencyApi.Migrations
 {
     [DbContext(typeof(BikeStoreContext))]
-    [Migration("20210505010943_initial")]
+    [Migration("20210506033346_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

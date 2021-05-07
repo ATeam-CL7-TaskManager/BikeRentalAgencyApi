@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BikeRentalAgencyUI.Controllers
 {
@@ -21,6 +22,8 @@ namespace BikeRentalAgencyUI.Controllers
             var model = await repository.GetOrders();
             return View(model);
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult> Edit(int? id)
         {
@@ -35,6 +38,8 @@ namespace BikeRentalAgencyUI.Controllers
             //model.Order
             return View(model);
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult> Edit(Order order)
         {
@@ -88,6 +93,8 @@ namespace BikeRentalAgencyUI.Controllers
 
             return View(model);
         }
+
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {

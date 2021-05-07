@@ -1,5 +1,6 @@
 ﻿using BikeRentalAgencyUI.Models;
 using BikeRentalAgencyUI.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -31,6 +32,8 @@ namespace BikeRentalAgencyUI.Controllers
             //model.Bikes
             return View(model);
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult> Edit(Bike bike)
         {
@@ -84,6 +87,8 @@ namespace BikeRentalAgencyUI.Controllers
 
             return View(model);
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {

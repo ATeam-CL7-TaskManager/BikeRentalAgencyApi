@@ -8,6 +8,7 @@ namespace BikeRentalAgencyUI.Controllers
 {
     public class BikeController : Controller
     {
+        //ViewData["Objectiveid"] = new SelectList(TaskTrackerContext, "Objectiveid", "ObjectiveName");
         readonly IBikeRepository repository;
         public BikeController(IBikeRepository repository)
         {

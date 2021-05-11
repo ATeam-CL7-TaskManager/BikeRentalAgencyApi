@@ -1,0 +1,23 @@
+﻿@model Bike
+<div class="card card-header-pills m-2 p-1">
+    <div class="bg-light p1">
+        <h4>
+            @Model.BikeStyle
+            <span class="bade bade-pill badge-primary" style="float:right">
+                <small>@Model.Price.ToString("c")</small>
+            </span>
+        </h4>
+    </div>
+    <form id="@Model.BikeID" asp-page="/Cart" method="Post">
+        <input type="hidden" asp-for="BikeID" />
+        <input type="hidden" name="returnUrl"
+               value="ViewContext.HttpContext.Request.PathAndQuery()"/>
+        <span class="card-text p-1">
+            @Model.FrameSize.ToString()
+            <button type="submit"
+                    class="btn btn-success btn-sm pull-right" style="float:right">
+                Reserve Bike
+            </button>
+        </span>
+    </form>
+</div>

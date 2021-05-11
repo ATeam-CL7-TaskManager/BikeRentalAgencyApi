@@ -1,0 +1,100 @@
+﻿@model BikeRentalAgencyUI.Models.BikeStoreViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Bikes</h1>
+
+<form asp-controller="BikeStore" asp-action="Index" method="get">
+
+    <select asp-for="SelectedStore" asp-items="Model.BikeStores">
+        <option value="">All</option>
+    </select>
+
+    <input type="submit" value="Filter" />
+</form>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Bike Style
+                </th>
+                <th>
+                    Location
+                </th>
+                <th>
+                    Hourly Fee
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Frame Size(in.)
+                </th>
+                <th>
+                    Motorized
+                </th>
+                <th>
+                    MTB Forks
+                </th>
+                <th>
+                    Dirt Tires
+                </th>
+
+                <th>
+                    Available Now?
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Bikes)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BikeStyle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StoreID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HourlyRate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FrameSize)
+                    </td>
+                    <td>
+                        @if (item.Motorized)
+                        {
+                            <i class="fas fa-check"></i>
+                        }
+                    </td>
+                    <td>
+                        @if (item.MTBSuspension)
+                        {
+                            <i class="fas fa-check"></i>
+                        }
+                    </td>
+                    <td>
+                        @if (item.AllTerrainTires)
+                        {
+                            <i class="fas fa-check"></i>
+                        }
+                    </td>
+                    <td>
+                        @if (!item.IsRented)
+                        {
+                            <i class="fas fa-check"></i>
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-controller="Reservation" asp-action="Edit" asp-route-bikeid="@item.BikeID" asp-route-HomeStoreID="@item.StoreID">Reserve</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

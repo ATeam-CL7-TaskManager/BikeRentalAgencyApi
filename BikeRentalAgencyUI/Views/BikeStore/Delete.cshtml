@@ -1,0 +1,66 @@
+﻿@model BikeRentalAgencyUI.Models.BikeViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Bike</h4>
+    <hr />
+    <dl class="row">
+    </dl>
+
+    <form asp-action="Delete">
+
+        <div class="form-group">
+            <label asp-for="Bike.BikeID" class="control-label"></label>
+            <input asp-for="Bike.BikeID" class="form-control" readonly />
+            <span asp-validation-for="Bike.BikeID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Bike.StoreID" class="control-label"></label>
+            <input asp-for="Bike.StoreID" class="form-control" />
+            <span asp-validation-for="Bike.StoreID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Bike.HourlyRate" class="control-label"></label>
+            <input asp-for="Bike.HourlyRate" class="form-control" />
+            <span asp-validation-for="Bike.HourlyRate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Bike.Price" class="control-label"></label>
+            <input asp-for="Bike.Price" class="form-control" />
+            <span asp-validation-for="Bike.Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Bike.FrameSize" class="control-label"></label>
+            <input asp-for="Bike.FrameSize" type="date" class="form-control" />
+            <span asp-validation-for="Bike.FrameSize" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Bike.Motorized" class="control-label"></label>
+            <input asp-for="Bike.Motorized" type="date" class="form-control" />
+            <span asp-validation-for="Bike.Motorized" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Bike.MTBSuspension" class="control-label"></label>
+            <input asp-for="Bike.MTBSuspension" type="date" class="form-control" />
+            <span asp-validation-for="Bike.MTBSuspension" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Bike.AllTerrainTires" class="control-label"></label>
+            <input asp-for="Bike.AllTerrainTires" type="date" class="form-control" />
+            <span asp-validation-for="Bike.AllTerrainTires" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Bike.BikeStyle" class="control-label"></label>
+            <input asp-for="Bike.BikeStyle" type="date" class="form-control" />
+            <span asp-validation-for="Bike.BikeStyle" class="text-danger"></span>
+        </div>
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

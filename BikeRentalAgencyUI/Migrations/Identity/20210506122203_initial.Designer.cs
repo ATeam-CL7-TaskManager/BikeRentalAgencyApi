@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeRentalAgencyUI.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20210506033944_initial")]
+    [Migration("20210506122203_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

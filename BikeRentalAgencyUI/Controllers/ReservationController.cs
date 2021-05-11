@@ -14,7 +14,7 @@ namespace BikeRentalAgencyUI.Controllers
             this.repository = repository;
         }
 
-        //[Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var model = await repository.GetReservations();

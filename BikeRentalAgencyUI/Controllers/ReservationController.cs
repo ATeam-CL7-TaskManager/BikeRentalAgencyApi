@@ -23,12 +23,14 @@ namespace BikeRentalAgencyUI.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? id, int? bikeid)
         {
             var model = new ReservationViewModel();
             if (id == null)
             {
                 model.Reservation = new Reservation();
+                if (bikeid != null)
+                { model.Reservation.BikeID = (int)bikeid; }
                 return View(model);
             }
 

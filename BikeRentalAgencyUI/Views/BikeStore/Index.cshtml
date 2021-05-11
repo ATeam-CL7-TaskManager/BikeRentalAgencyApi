@@ -17,7 +17,7 @@
     <thead>
         <tr>
             <th>
-                BikeID
+                BikeStyle
             </th>
             <th>
                 StoreID
@@ -26,7 +26,7 @@
                 HourlyRate
             </th>
             <th>
-               Price
+                Price
             </th>
             <th>
                 FrameSize
@@ -40,48 +40,44 @@
             <th>
                 AllTerrainTires
             </th>
-            <th>
-                BikeStyle
-            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Bikes)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BikeID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StoreID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HourlyRate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FrameSize)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Motorized)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MTBSuspension)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AllTerrainTires)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BikeStyle)
-                </td>
-                <td>
-                    <a class="btn btn-primary" asp-controller="Reservation" asp-action="Create">Reservation</a>
-                    @*@Html.ActionLink("Reservation", "Create", new { id = item.BikeID })*@
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BikeStyle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StoreID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HourlyRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrameSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Motorized)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MTBSuspension)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllTerrainTires)
+            </td>
+
+            <td>
+                <a class="btn btn-primary" asp-controller="Reservation" asp-action="Create">Reservation</a>
+                @*@Html.ActionLink("Reservation", "Create", new { id = item.BikeID })*@
+            </td>
+        </tr>
         }
     </tbody>
 </table>

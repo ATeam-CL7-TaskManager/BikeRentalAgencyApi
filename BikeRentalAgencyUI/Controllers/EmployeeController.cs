@@ -1,10 +1,12 @@
 ﻿using BikeRentalAgencyUI.Models;
 using BikeRentalAgencyUI.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace BikeRentalAgencyUI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class EmployeeController : Controller
     {
         readonly IEmployeeRepository repository;

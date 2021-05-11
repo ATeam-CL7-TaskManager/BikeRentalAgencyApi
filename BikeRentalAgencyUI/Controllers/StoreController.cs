@@ -1,5 +1,6 @@
 ﻿using BikeRentalAgencyUI.Models;
 using BikeRentalAgencyUI.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -17,6 +18,9 @@ namespace BikeRentalAgencyUI.Controllers
             var model = await repository.GetStores();
             return View(model);
         }
+
+
+        [Authorize (Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult> Edit(int? id)
         {
@@ -31,6 +35,9 @@ namespace BikeRentalAgencyUI.Controllers
             //model.Store
             return View(model);
         }
+
+
+        [Authorize (Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult> Edit(Store store)
         {
@@ -83,6 +90,9 @@ namespace BikeRentalAgencyUI.Controllers
 
             return View(model);
         }
+
+
+        [Authorize (Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {

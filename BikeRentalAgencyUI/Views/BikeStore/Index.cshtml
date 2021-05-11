@@ -4,9 +4,6 @@
 }
 
 <h1>Bikes</h1>
-<p>
-    <a asp-action="Edit">Create New</a>
-</p>
 
 <form asp-controller="BikeStore" asp-action="Index" method="get">
 
@@ -81,9 +78,8 @@
                     @Html.DisplayFor(modelItem => item.BikeStyle)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.BikeID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.BikeID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.BikeID })
+                    <a class="btn btn-primary" asp-controller="Reservation" asp-action="Create">Reservation</a>
+                    @*@Html.ActionLink("Reservation", "Create", new { id = item.BikeID })*@
                 </td>
             </tr>
         }

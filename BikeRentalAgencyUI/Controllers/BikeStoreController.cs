@@ -28,7 +28,7 @@ namespace BikeRentalAgencyUI.Controllers
             // Use LINQ to get list of bikes.
             var bikes = (from b in _context.Bikes
                          select b);
-
+           
             var storesSelect = (from s in _context.Stores
                           select s.AddressLine1);
 

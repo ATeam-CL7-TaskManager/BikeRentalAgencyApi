@@ -4,22 +4,22 @@
 
 <div class="text-center">
     <h1 class="display-4">BestBikeRentalApp</h1>
-    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
 </div>
-<div class="row">
-    <div class="col">
-        <h2>Bike Rental Store</h2>
-        <p>Your number 1 bike rental app.</p>
-        <p>Check out our inventory on our website.</p>
+    <div class="row" style="align-content:center">
+        <div class="col" style="align-content:center">
+            <h1 style="align-content:center">We make renting bikes a ride in the park.</h1>
+        </div>
     </div>
-    <div class="col">
-        <h2>Rent Rates</h2>
-        <p>Rent your bike by the hour.</p>
-        <p>-OR- Rent rent your bike by the day.</p>
-    </div>
-    <div class="col">
-        <h2>Easy Payment Options</h2>
-        <p>Pay using PayPal.</p>
-        <p>-OR- We accept Google or Apple Payment.</p>
-    </div>
-</div>
+<hr/>
+        <div class="row">
+            <div class="col">
+                <h2>Affordable Rates</h2>
+                <p>Click the button below to find bikes near you and make your reservation.</p>
+                <a class="btn btn-primary" asp-controller="BikeStore" asp-action="Index">Start</a>
+            </div>
+            <div class="col">
+                <h2>Easy Payment</h2>
+                <p>Pay seamlessly and securely using PayPal.</p>
+                <a class="btn btn-primary" asp-controller="Paypal" asp-action="Index">Pay Now</a>
+            </div>
+        </div>

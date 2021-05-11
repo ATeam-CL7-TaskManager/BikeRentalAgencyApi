@@ -1,0 +1,65 @@
+﻿@model BikeViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<div>
+    <h4>Post</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bike.BikeID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bike.BikeID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bike.StoreID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bike.StoreID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bike.HourlyRate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bike.HourlyRate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bike.FrameSize)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bike.FrameSize)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bike.Motorized)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bike.Motorized)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bike.MTBSuspension)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bike.MTBSuspension)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bike.AllTerrainTires)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bike.AllTerrainTires)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bike.BikeStyle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bike.BikeStyle)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Bike.BikeID }) |
+    <a asp-action="Index">Back to List</a>
+</div>

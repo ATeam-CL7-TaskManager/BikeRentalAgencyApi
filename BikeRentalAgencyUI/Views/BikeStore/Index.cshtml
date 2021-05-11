@@ -74,7 +74,7 @@
             </td>
 
             <td>
-                <a class="btn btn-primary" asp-controller="Reservation" asp-action="Create">Reservation</a>
+                <a class="btn btn-primary" asp-controller="Reservation" asp-action="Edit" asp-route-bikeid="@item.BikeID">Reserve</a>
                 @*@Html.ActionLink("Reservation", "Create", new { id = item.BikeID })*@
             </td>
         </tr>

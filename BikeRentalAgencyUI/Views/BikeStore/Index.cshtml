@@ -5,7 +5,6 @@
 
 <h1>Bikes</h1>
 
-
 <form asp-controller="BikeStore" asp-action="Index" method="get">
 
     <select asp-for="SelectedStore" asp-items="Model.BikeStores">
@@ -14,45 +13,47 @@
 
     <input type="submit" value="Filter" />
 </form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                BikeID
+                Bike Style
             </th>
             <th>
-                StoreID
+                Location
             </th>
             <th>
-                HourlyRate
+                Hourly Fee
             </th>
             <th>
-               Price
+                Price
             </th>
             <th>
-                FrameSize
+                Frame Size(in.)
             </th>
             <th>
-                Motor
+                Motorized
             </th>
             <th>
-                MTBSuspension
+                MTB Forks
             </th>
             <th>
-                AllTerrainTires
+                Dirt Tires
             </th>
+
             <th>
-                BikeStyle
+                Available Now?
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
+
         @foreach (var item in Model.Bikes)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BikeID)
+                    @Html.DisplayFor(modelItem => item.BikeStyle)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.StoreID)
@@ -67,21 +68,31 @@
                     @Html.DisplayFor(modelItem => item.FrameSize)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Motorized)
+                    @if (item.Motorized)
+                    {
+                        <i class="fas fa-check"></i>
+                    }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MTBSuspension)
+                    @if (item.MTBSuspension)
+                    {
+                        <i class="fas fa-check"></i>
+                    }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AllTerrainTires)
+                    @if (item.AllTerrainTires)
+                    {
+                        <i class="fas fa-check"></i>
+                    }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BikeStyle)
+                    @if (!item.IsRented)
+                    {
+                        <i class="fas fa-check"></i>
+                    }
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.BikeID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.BikeID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.BikeID })
+                    <a class="btn btn-primary" asp-controller="Reservation" asp-action="Edit" asp-route-bikeid="@item.BikeID" asp-route-HomeStoreID="@item.StoreID">Reserve</a>
                 </td>
             </tr>
         }

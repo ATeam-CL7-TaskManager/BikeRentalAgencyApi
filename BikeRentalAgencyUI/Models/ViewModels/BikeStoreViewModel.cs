@@ -14,6 +14,5 @@ namespace BikeRentalAgencyUI.Models
         public List<Store> Stores { get; set; }
         public SelectList BikeStores { get; set; }
         public string SelectedStore { get; set; }
-
     }
 }

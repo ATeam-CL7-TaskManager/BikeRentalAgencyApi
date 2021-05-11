@@ -14,7 +14,7 @@ namespace BikeRentalAgencyUI.Controllers
             this.repository = repository;
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var model = await repository.GetReservations();
@@ -23,12 +23,17 @@ namespace BikeRentalAgencyUI.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? id, int? bikeid, int? homeStoreID)
         {
             var model = new ReservationViewModel();
             if (id == null)
             {
                 model.Reservation = new Reservation();
+                if (bikeid != null)
+                { model.Reservation.BikeID = (int)bikeid; }
+                if (homeStoreID != null)
+                { model.Reservation.HomeStoreID = (int)homeStoreID; }
+                model.Reservation.StartDate = System.DateTime.Now;
                 return View(model);
             }
 

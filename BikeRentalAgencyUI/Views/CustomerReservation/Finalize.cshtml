@@ -1,0 +1,50 @@
+﻿@model Reservation
+
+@{
+    ViewData["Title"] = "Finalize";
+}
+
+<h1>Finalize</h1>
+
+<h4>Confirm your Reservation and click add to cart.</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <Div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div >
+                <p >@Html.DisplayFor(g => g.StartDate)</p>
+            </div>
+            <div >
+                <p >@Html.DisplayFor(g => g.EndDate)</p>
+            </div>
+            <div >
+                @*<p asp-for="HomeStore">@Html.DisplayFor(g => g.HomeStore)</p>*@
+            </div>
+            <div>
+                <p asp-for="RentedStoreID" readonly class="form-control"></p>
+            </div>
+            <div>
+                <p asp-for="ReservationTotal" readonly class="form-control"></p>
+            </div>
+            <div>
+                <p asp-for="AccessoriesTotal" readonly class="form-control"></p>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </Div>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-primary" asp-controller="CustomerReservation" asp-action="Edit" asp-route-id="@Model.ReservationID" asp-route-bikeid="@Model.BikeID" asp-route-homeStoreID="@Model.HomeStoreID">Edit</a>    
+    </div>
+<div>
+    @*PLACEHOLDER FOR WHEN CART IS FINISHED*@
+    <a class="btn btn-primary" asp-controller="Home" asp-action="Index" asp-route-reservation="@*Reservation*@">Add to Cart</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

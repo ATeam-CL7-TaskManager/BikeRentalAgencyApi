@@ -1,4 +1,5 @@
 ﻿using BikeRentalAgencyUI.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace BikeRentalAgencyUI.Repository
     public class ReservationRepository : IReservationRepository
 {
         string baseUrl = "http://localhost:5000/api/";
-        public async Task<bool> AddReservation(Reservation reservation)
+        public async Task<HttpResponseMessage> AddReservation(Reservation reservation)
         {
             using (var client = new HttpClient())
             {
@@ -23,7 +24,8 @@ namespace BikeRentalAgencyUI.Repository
                     "reservation/Addreservation", reservation);
 
                 //Checking the response is successful or not which is sent using HttpClient  
-                return res.IsSuccessStatusCode;
+                string greggy = await res.Content.ReadAsStringAsync();//.IsSuccessStatusCode;
+                return res;
             }
         }
 
@@ -105,7 +107,7 @@ namespace BikeRentalAgencyUI.Repository
 
                 //Sending request to find web api REST service resource GetPost using HttpClient  
                 HttpResponseMessage res = await client.GetAsync($"Reservation/GetReservation/{reservationId}");
-
+                string watch = await res.Content.ReadAsStringAsync();
                 //Checking the response is successful or not which is sent using HttpClient  
                 if (res.IsSuccessStatusCode)
                 {

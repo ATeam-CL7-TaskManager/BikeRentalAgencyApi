@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
+
 namespace BikeRentalAgencyUI.Controllers
 {
     public class HomeController : Controller
@@ -34,5 +35,6 @@ namespace BikeRentalAgencyUI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
     }
 }

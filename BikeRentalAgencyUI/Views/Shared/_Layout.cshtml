@@ -55,12 +55,13 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-           Team 1 Carson, Ryan, David, James - <a asp-area="" asp-controller="Home" >Home</a>
+            Team 1 Carson, Ryan, David, James - <a asp-area="" asp-controller="Home">Home</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

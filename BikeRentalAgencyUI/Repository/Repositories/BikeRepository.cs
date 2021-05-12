@@ -14,6 +14,7 @@ namespace BikeRentalAgencyUI.Repository
     public class BikeRepository : IBikeRepository
     {
         string baseUrl = "http://localhost:5000/Api/";
+
         public async Task<bool> AddBike(Bike bike)
         {
             using (var client = new HttpClient())

@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Index.cshtml" />
+    <None Include="Views\whyyyyyy.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />

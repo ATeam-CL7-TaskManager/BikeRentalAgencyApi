@@ -26,25 +26,44 @@ namespace BikeRentalAgencyUI.Controllers
         {
             var storesSelect = await (from s in _context.Stores
                                 select s.AddressLine1).ToListAsync();
-
+           
             var reservationVM = new ReservationViewModel();
-            if (id == null)
+            reservationVM.BikeStores = new SelectList(storesSelect);
+            bool exists;
+            //if the reservation doesnt exist, create a new reservation and pull the bike and homestore id from the URL, and set the start datetime to now.
+            if (id == 0)
             {
+                exists = false;
                 reservationVM.Reservation = new Reservation();
                 if (bikeid != null)
                 { reservationVM.Reservation.BikeID = (int)bikeid; }
                 if (homeStoreID != null)
                 { reservationVM.Reservation.HomeStoreID = (int)homeStoreID; }
                 reservationVM.Reservation.StartDate = System.DateTime.Now;
-            }
-            else
-            {
-                reservationVM.Reservation = await repository.GetReservation(id);
+                reservationVM.HomeStore = await (from s in _context.Stores
+                                                 where s.StoreID == homeStoreID
+                                                 select s.AddressLine1).FirstOrDefaultAsync();
             }
 
-            
-            reservationVM.BikeStores = new SelectList(storesSelect);
-            
+            //if the resrvation does exist, pull the existing information
+            else
+            {
+                exists = true;
+                reservationVM.Reservation = await repository.GetReservation(id);
+                reservationVM.HomeStore = await (from s in _context.Stores
+                                                 where s.StoreID == reservationVM.Reservation.HomeStoreID
+                                                 select s.AddressLine1).FirstOrDefaultAsync();
+                reservationVM.DropOffStore = await (from s in _context.Stores
+                                                    where s.StoreID == reservationVM.Reservation.RentedStoreID
+                                                    select s.AddressLine1).FirstOrDefaultAsync();
+            }
+            reservationVM.HomeStore = await (from s in _context.Stores
+                                             where s.StoreID == reservationVM.Reservation.HomeStoreID
+                                             select s.AddressLine1).FirstOrDefaultAsync();
+            reservationVM.DropOffStore = await (from s in _context.Stores
+                                                where s.StoreID == reservationVM.Reservation.RentedStoreID
+                                                select s.AddressLine1).FirstOrDefaultAsync();
+
             return View(reservationVM);
 
         }
@@ -93,17 +112,17 @@ namespace BikeRentalAgencyUI.Controllers
             }
             TempData["message"] = message;
 
-            //if (succeeded) return RedirectToAction("Finalize", reservation.ReservationID);
             return View(reservationVM);
         }
         [HttpGet]
         public async Task<ActionResult> Finalize(int resId)
         {
-            Reservation reservation = await repository.GetReservation(resId);
-            //reservationVM.HomeStore = await(from s in _context.Stores
-            //                      where s.StoreID == reservationVM.Reservation.HomeStoreID
-            //                      select s.AddressLine1 ).FirstOrDefaultAsync();
-            return View(reservation);
+            var reservationVM = new ReservationViewModel();
+            reservationVM.Reservation = await repository.GetReservation(resId);
+            reservationVM.HomeStore = await (from s in _context.Stores
+                                             where s.StoreID == reservationVM.Reservation.HomeStoreID
+                                             select s.AddressLine1).FirstOrDefaultAsync();
+            return View(reservationVM);
         }
 
     }

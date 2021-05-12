@@ -31,36 +31,21 @@
             <div class="form-group">
                 <input asp-for="Reservation.IsComplete" type="hidden" class="form-control" />
             </div>
-            <div class="form-group">
-                <label asp-for="Reservation.HomeStoreID" class="control-label"></label>
-                <input asp-for="Reservation.HomeStoreID" readonly type="hidden" class="form-control" />
-                @*<p  class="form-control">@Html.DisplayFor(g =>g.HomeStore)</p>*@
-                <span asp-validation-for="Reservation.HomeStoreID" class="text-danger"></span>
-            </div>
-            @if (Model.Reservation.ReservationID == 0)
+            @if (Model.SelectedStore == null)
             {
                 <div class="form-group">
-                    <label>Drop-Off location</label>
+                    <label><b>Drop-Off location</b></label><br/>
                     <select asp-for="SelectedStore" asp-items="Model.BikeStores">
                     </select>
                 </div>
             }
             else
             {
-                <div class="form-group">
-                    <input asp-for="Reservation.RentedStoreID" readonly  class="form-control" />
-                </div>
+            <div>
+                <label><b>Drop-Off location:</b></label>
+                <p>@Html.DisplayFor(g => g.SelectedStore)</p>
+            </div>
             }
-            <div class="form-group">
-                <label asp-for="Reservation.ReservationTotal" class="control-label"></label>
-                <input asp-for="Reservation.ReservationTotal" readonly class="form-control" />
-                <span asp-validation-for="Reservation.ReservationTotal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.AccessoriesTotal" class="control-label"></label>
-                <input asp-for="Reservation.AccessoriesTotal" readonly class="form-control" />
-                <span asp-validation-for="Reservation.AccessoriesTotal" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <input asp-for="Reservation.IsStarted" readonly type="hidden" class="form-control" />
             </div>

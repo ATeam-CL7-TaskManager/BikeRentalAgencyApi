@@ -13,7 +13,12 @@ namespace BikeRentalAgencyUI.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ReservationID { get; set; }
         public int BikeID { get; set; }
+        [DisplayFormat(DataFormatString = "{0:s}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:s}", ApplyFormatInEditMode = true)]
+        [Display(Name = "End Date")]
+        //[ValidateDateRange]
         public DateTime EndDate { get; set; }
         public bool IsComplete { get; set; }
         public int HomeStoreID {get;set;} 

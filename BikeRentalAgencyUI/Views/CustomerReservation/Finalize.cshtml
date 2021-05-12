@@ -1,4 +1,4 @@
-﻿@model Reservation
+﻿@model ReservationViewModel
 
 @{
     ViewData["Title"] = "Finalize";
@@ -12,34 +12,36 @@
     <div class="col-md-4">
         <Div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div >
-                <p >@Html.DisplayFor(g => g.StartDate)</p>
-            </div>
-            <div >
-                <p >@Html.DisplayFor(g => g.EndDate)</p>
-            </div>
-            <div >
-                @*<p asp-for="HomeStore">@Html.DisplayFor(g => g.HomeStore)</p>*@
+            <div>
+                <label><b>Start Date:</b></label>
+                <p>@Html.DisplayFor(g => g.Reservation.StartDate)</p>
             </div>
             <div>
-                <p asp-for="RentedStoreID" readonly class="form-control"></p>
+                <label><b>End Date:</b></label>
+                <p>@Html.DisplayFor(g => g.Reservation.EndDate)</p>
+            </div>
+            <hr/>
+            <div>
+                <label><b>Drop-off location:</b></label>
+                <p asp-for="RentedStoreID" readonly>@Html.DisplayFor(g => g.Reservation.RentedStoreID)</p>
             </div>
             <div>
-                <p asp-for="ReservationTotal" readonly class="form-control"></p>
+                <label>Reservation Total:</label>
+                <p asp-for="ReservationTotal" readonly>@Html.DisplayFor(g => g.Reservation.ReservationTotal)</p>
             </div>
             <div>
-                <p asp-for="AccessoriesTotal" readonly class="form-control"></p>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label>Accessories Total:</label>
+                <p asp-for="AccessoriesTotal" readonly >@Html.DisplayFor(g => g.Reservation.AccessoriesTotal)</p>
             </div>
         </Div>
     </div>
 </div>
 
 <div>
-    <a class="btn btn-primary" asp-controller="CustomerReservation" asp-action="Edit" asp-route-id="@Model.ReservationID" asp-route-bikeid="@Model.BikeID" asp-route-homeStoreID="@Model.HomeStoreID">Edit</a>    
-    </div>
+    <a class="btn btn-primary" asp-controller="CustomerReservation" asp-action="Edit" asp-route-id="@Model.Reservation.ReservationID" asp-route-bikeid="@Model.Reservation.BikeID" asp-route-homeStoreID="@Model.Reservation.HomeStoreID">Edit</a>    
+</div>
+<div/>
+<br/>
 <div>
     @*PLACEHOLDER FOR WHEN CART IS FINISHED*@
     <a class="btn btn-primary" asp-controller="Home" asp-action="Index" asp-route-reservation="@*Reservation*@">Add to Cart</a>

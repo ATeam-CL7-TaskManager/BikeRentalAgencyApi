@@ -4,22 +4,59 @@
 
 <div class="text-center">
     <h1 class="display-4">BestBikeRentalApp</h1>
-    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
 </div>
+<div class="row" style="align-content:center">
+    <div class="col" style="align-content:center">
+        <h1 style="align-content:center">We make renting bikes a ride in the park.</h1>
+    </div>
+</div>
+<hr />
 <div class="row">
     <div class="col">
-        <h2>Bike Rental Store</h2>
-        <p>Your number 1 bike rental app.</p>
-        <p>Check out our inventory on our website.</p>
-    </div>
-    <div class="col">
-        <h2>Rent Rates</h2>
-        <p>Rent your bike by the hour.</p>
-        <p>-OR- Rent rent your bike by the day.</p>
+        <h2>Affordable Rates</h2>
+        <p>Click the button below to find bikes near you and make your reservation.</p>
+        <a class="btn btn-primary" asp-controller="BikeStore" asp-action="Index">Start</a>
     </div>
     <div class="col">
         <h2>Easy Payment Options</h2>
-        <p>Pay using PayPal.</p>
-        <p>-OR- We accept Google or Apple Payment.</p>
+        <p>Pay seamlessly and securely using Stripe.</p>
+        <button id="checkout-button">Checkout</button>
+
+
     </div>
 </div>
+@section Scripts{@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <script type = "text/javascript" >
+                 // Create an instance of the Stripe object with your publishable API key
+                 var stripe = Stripe('pk_test_51IqHj4AGeQfZJrspPlPqDykATINQ5VGzHC0AeWdcn0DwKZA4Y1AQMz77Yifrqtv7IrSosGIg5r2gGJNrCBscsWpl00KeR79rAv');
+        var checkoutButton = document.getElementById('checkout-button');
+
+        checkoutButton.addEventListener('click', function() {
+            // Create a new Checkout Session using the server-side endpoint you
+            // created in step 3.
+            fetch('/create-checkout-session', {
+            method: 'POST',
+                    })
+                        .then(function(response) {
+                return response.json();
+            })
+                        .then(function(session) {
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+                        .then(function(result) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using `error.message`.
+                if (result.error)
+                {
+                    alert(result.error.message);
+                }
+            })
+                        .catch (function (error) {
+                console.error('Error:', error);
+            });
+            });
+
+            </script> } 

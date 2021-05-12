@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Index.cshtml" />
+    <None Include="Views\whyyyyyy.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
@@ -26,7 +26,17 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Stripe.net" Version="39.48.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Success - Copy - Copy.cshtml.cs">
+      <DependentUpon>Success - Copy.cshtml.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Success - Copy.cshtml.cs">
+      <DependentUpon>Success.cshtml.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

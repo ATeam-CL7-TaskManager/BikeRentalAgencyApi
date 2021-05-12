@@ -10,7 +10,7 @@ namespace BikeRentalAgencyUI.Controllers
     {
         public PaymentsController()
         {
-            StripeConfiguration.ApiKey = "pk_test_51IqHj4AGeQfZJrspPlPqDykATINQ5VGzHC0AeWdcn0DwKZA4Y1AQMz77Yifrqtv7IrSosGIg5r2gGJNrCBscsWpl00KeR79rAv";
+            StripeConfiguration.ApiKey = "sk_test_51IqHj4AGeQfZJrspSB9VfeNlUgsAcEu0dHlc45zBQsbpE2dqsyRL0YEA2C8hceguvd25mU9Npa1Dffi9GDB3YQav00ssNm6q4A";
         }
 
         [HttpPost("create-checkout-session")]
@@ -40,8 +40,8 @@ namespace BikeRentalAgencyUI.Controllers
           },
         },
                 Mode = "payment",
-                SuccessUrl = "https://example.com/success",
-                CancelUrl = "https://example.com/cancel",
+                SuccessUrl = "http://localhost:5001/success",
+                CancelUrl = "http://localhost:5001/cancel",
             };
 
             var service = new SessionService();

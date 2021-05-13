@@ -14,7 +14,7 @@ namespace BikeRentalAgencyUI.Controllers
             this.repository = repository;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var model = await repository.GetReservations();
@@ -55,7 +55,8 @@ namespace BikeRentalAgencyUI.Controllers
             //add new reservation
             if (reservation.ReservationID == 0)
             {
-                succeeded = await repository.AddReservation(reservation);
+                var res = await repository.AddReservation(reservation);
+                succeeded = res.IsSuccessStatusCode;
                 message = $"{reservation.ReservationID} has not been added";
 
                 //Checking the response is successful or not   

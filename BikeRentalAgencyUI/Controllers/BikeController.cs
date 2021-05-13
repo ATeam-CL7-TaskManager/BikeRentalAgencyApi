@@ -34,7 +34,7 @@ namespace BikeRentalAgencyUI.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult> Edit(Bike bike)
         {
